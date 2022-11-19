@@ -120,7 +120,7 @@ public class UserService {
         Authority authority = new Authority();
         authority.setAuthorityName("ROLE_USER");
 
-        User user = new User(username, password, email, realname,phone_number,true);
+        User user = new User(username, password, email, realname,phone_number);
         user.setAuthorities(Collections.singleton(authority));
 
         userRepository.save(user);

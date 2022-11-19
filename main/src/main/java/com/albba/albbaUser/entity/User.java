@@ -34,8 +34,6 @@ public class User {
     @Column(name = "phone_number", length = 20)
     private String phone_number;
 
-    @Column(name = "activated")
-    private boolean activated;
 
     @ManyToMany
     @JoinTable(
@@ -44,13 +42,13 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<Authority> authorities;
 
-    public User(String username, String password, String email,String realname,String phone_number,boolean activ) {
+    public User(String username, String password, String email,String realname,String phone_number) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.realname = realname;
         this.phone_number = phone_number;
-        this.activated = true;
+
 
 
     }
