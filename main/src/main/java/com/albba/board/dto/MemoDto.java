@@ -4,7 +4,6 @@ package com.albba.board.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import sun.util.resources.cldr.ext.LocaleNames_es_GT;
 
 @NoArgsConstructor
 @AllArgsConstructor
