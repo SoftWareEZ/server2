@@ -12,4 +12,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //권한 정보도 같이 가져오는 것, Eager -> authorities
     @EntityGraph(attributePaths = "authorities")
     Optional<User> findOneWithAuthoritiesByUsername(String username);
+
+    Optional<User> findByKakaoId(Long kakaoId);
 }

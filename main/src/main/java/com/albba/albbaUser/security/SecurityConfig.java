@@ -84,6 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //로그인에 필요한 주소 몇 개는 열어두기
                 .antMatchers("/albba/login").permitAll()
                 .antMatchers("/albba/signup").permitAll()
+                .antMatchers("/albba/kakao/callback").permitAll()
                 //나머지는 401
                 .anyRequest().authenticated()
 
