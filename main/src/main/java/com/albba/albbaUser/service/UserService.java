@@ -1,6 +1,7 @@
 package com.albba.albbaUser.service;
 
 import com.albba.albbaUser.dto.SignupRequestDto;
+import com.albba.albbaUser.dto.UserInfoFrontDto;
 import com.albba.albbaUser.entity.Authority;
 import com.albba.albbaUser.entity.User;
 import com.albba.albbaUser.repository.UserRepository;
@@ -25,8 +26,9 @@ import java.util.Optional;
 public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-
+    //private final StoreRepository storeRepository;
     private static final Logger logger = LoggerFactory.getLogger(SecurityUtil.class);
+
 
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -42,14 +44,14 @@ public class UserService {
     }
     //인증 정보 바탕으로 ID 가져오는 서비스, 로그인 성공 이후에 한 번만 해서 가지고 있으면 될 것 같은데
 
-    public Optional<User> getUserInfo()
+    public UserInfoFrontDto getUserInfo()
     {
 
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null) {
             logger.debug("Security Context에 인증 정보가 없습니다.");
-            return Optional.empty();
+            return null;
         }
 
         String username = null;
@@ -61,10 +63,23 @@ public class UserService {
         }
 
 
-        Optional<User> found = userRepository.findByUsername(username);
-        if(found.isPresent())
-            return Optional.ofNullable(found.get());
 
+
+
+
+        Optional<User> found = userRepository.findByUsername(username);
+        if(found.isPresent()) {
+            User usertemp = found.get();
+            //임시로 storeid=1로해두고
+            //storerepository코드 추가 되면 바꾸기 이부분
+            Long storeid = (long)1;
+           /* Optional<Long> storechk = storeRepository.findByUserId(usertemp.getUserId());
+            if(storechk.isPresent())
+                storeid= storechk.get();
+            else
+                storeid = null;*/
+            return new UserInfoFrontDto(usertemp,storeid);
+        }
         else
             throw new IllegalArgumentException("해당하는 유저 정보가 없습니다.");
 

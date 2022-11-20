@@ -3,6 +3,7 @@ package com.albba.albbaUser.controller;
 import com.albba.albbaUser.dto.LoginDto;
 import com.albba.albbaUser.dto.SignupRequestDto;
 import com.albba.albbaUser.dto.TokenDto;
+import com.albba.albbaUser.dto.UserInfoFrontDto;
 import com.albba.albbaUser.entity.User;
 import com.albba.albbaUser.jwt.JwtFilter;
 import com.albba.albbaUser.jwt.TokenProvider;
@@ -73,11 +74,9 @@ public class LoginController {
     }
 
     @GetMapping("/userinfo")
-    public User getUser()
+    public UserInfoFrontDto getUser()
     {
-        User temp = userService.getUserInfo().get();
-        temp.setPassword(null);
-        return temp;
+        return userService.getUserInfo();
     }
 
     //주석달랭
