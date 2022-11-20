@@ -5,6 +5,8 @@ import com.albba.albbaUser.dto.UserInfoFrontDto;
 import com.albba.albbaUser.entity.Authority;
 import com.albba.albbaUser.entity.User;
 import com.albba.albbaUser.repository.UserRepository;
+import com.albba.work.model.Store;
+import com.albba.work.repository.StoreRepository;
 import org.apache.catalina.security.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,14 +28,15 @@ import java.util.Optional;
 public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    //private final StoreRepository storeRepository;
+    private final StoreRepository storeRepository;
     private static final Logger logger = LoggerFactory.getLogger(SecurityUtil.class);
 
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, StoreRepository storeRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.storeRepository = storeRepository;
     }
 
     //테스트용
@@ -73,11 +76,11 @@ public class UserService {
             //임시로 storeid=1로해두고
             //storerepository코드 추가 되면 바꾸기 이부분
             Long storeid = (long)1;
-           /* Optional<Long> storechk = storeRepository.findByUserId(usertemp.getUserId());
+            Optional<Store> storechk = storeRepository.findByUserId(usertemp.getUserId());
             if(storechk.isPresent())
-                storeid= storechk.get();
+                storeid= storechk.get().getStoreId();
             else
-                storeid = null;*/
+                storeid = null;
             return new UserInfoFrontDto(usertemp,storeid);
         }
         else

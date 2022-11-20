@@ -8,8 +8,7 @@ import java.util.Random;
 
 public interface StoreRepository extends JpaRepository<Store, Long> {
     // Optional<Store> findById(Long userId);
-
-    Optional<Store> findById(Long storeId);
+     Optional<Store> findByUserId(Long userId);
 
     default String makeCode(){
         Random random = new Random();
