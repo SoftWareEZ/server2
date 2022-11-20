@@ -23,6 +23,8 @@ public class Memo extends Timestamp {
     @Column(nullable= false)
     private String contents;
 
+    @Column(nullable = false)
+    private Long storeId;
 
     /*
     @ManyToOne
@@ -40,6 +42,7 @@ public class Memo extends Timestamp {
     {
         this.title = memoDto.getTitle();
         this.contents = memoDto.getContents();
+        this.storeId = memoDto.getStoreId();
     }
 
 }

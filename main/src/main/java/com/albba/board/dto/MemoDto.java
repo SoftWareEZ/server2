@@ -16,7 +16,8 @@ public class MemoDto {
     private String title;
     //내용
     private String contents;
-    //
+    //storeid
+    private Long storeId;
 
 
 }

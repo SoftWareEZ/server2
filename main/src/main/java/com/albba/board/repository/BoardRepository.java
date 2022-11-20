@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface BoardRepository extends JpaRepository<Memo, Long> {
     List<Memo> findAllByModifiedAtBetweenOrderByModifiedAtDesc(LocalDateTime start, LocalDateTime end);
+    List<Memo> findMemosByStoreIdAndModifiedAtBetweenOrderByModifiedAtDesc(Long storeId,LocalDateTime start, LocalDateTime end);
 }

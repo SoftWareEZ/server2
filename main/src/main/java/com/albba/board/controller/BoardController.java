@@ -19,12 +19,21 @@ public class BoardController {
 //ㅇㅇ
     private final BoardService boardService;
 
-    //공지 전체 읽어오기 (개인 + 관리자 모두)
-    @GetMapping("/board/List")
+    //공지 전체 읽어오기 (개인 + 관리자 모두) storeId기준
+    @GetMapping("/board/List/{id}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public List<Memo> getMemos() throws SQLException {
-        return boardService.getMemos();
+    public List<Memo> getMemos(@PathVariable Long id) throws SQLException {
+        return boardService.getMemos(id);
     }
+
+
+    //특정 공지만 읽어오기
+    @GetMapping("/board/View/{id}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public Memo getMemo(@PathVariable Long id) throws SQLException {
+        return boardService.getMemo(id);
+    }
+
 
     //공지 수정
     //@Secured(value= UserRoleEnum.Authority.ADMIN)
@@ -45,7 +54,7 @@ public class BoardController {
 
 
     //공지 삭제하기
-    @DeleteMapping("/board/Post/{id}")
+    @DeleteMapping("/board/delete/{id}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public Long deleteMemo(@PathVariable Long id) {
         boardService.deleteById(id);
