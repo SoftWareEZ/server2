@@ -29,7 +29,7 @@ public class Commute {
     @JsonFormat(pattern = "YYYY-MM-dd")
     private String date;
 
-    @Column
+    @Column(nullable = false)
     @JsonFormat(pattern = "HH:mm")
     private String start;
 
