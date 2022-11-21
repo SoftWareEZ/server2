@@ -45,7 +45,7 @@ public class UserService {
 
 
     }
-    //인증 정보 바탕으로 ID 가져오는 서비스, 로그인 성공 이후에 한 번만 해서 가지고 있으면 될 것 같은데
+    //인증 정보 바탕으로 ID 가져오는 서비스
 
     public UserInfoFrontDto getUserInfo()
     {
@@ -75,6 +75,8 @@ public class UserService {
             User usertemp = found.get();
             //임시로 storeid=1로해두고
             //storerepository코드 추가 되면 바꾸기 이부분
+            //userID에 해당하는 storeID가 있는 지 알아보고 있으면 그 store 반환
+            //한 사용자가 사업장 여러 개 할거면 여기서 List<Store> 로 가져오기
             Long storeid = (long)1;
             Optional<Store> storechk = storeRepository.findByUserId(usertemp.getUserId());
             if(storechk.isPresent())

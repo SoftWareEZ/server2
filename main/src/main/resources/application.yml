@@ -28,6 +28,6 @@ logging:
 jwt:
   header: Authorization
   #HS512 ????? ??? ??? ??? 512bit, ? 64byte ??? secret key? ???? ??.
-  #echo 'silvernine-tech-spring-boot-jwt-tutorial-secret-silvernine-tech-spring-boot-jwt-tutorial-secret'|base64
-  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  #echo 'albba-secret-key-for-jwttoken-software-engineering-assignment-minju--'|base64
+  secret: YWxiYmEtc2VjcmV0LWtleS1mb3Itand0dG9rZW4tc29mdHdhcmUtZW5naW5lZXJpbmctYXNzaWdubWVudC1taW5qdS0t
   token-validity-in-seconds: 86400

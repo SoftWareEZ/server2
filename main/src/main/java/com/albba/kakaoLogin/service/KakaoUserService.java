@@ -36,6 +36,8 @@ public class KakaoUserService {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
+    public static String CALLBACK_ADDR= "http://localhost:8080/albba/kakao/callback";
+
     public ResponseEntity<TokenDto> kakaoLogin(String code) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청
         String accessToken = getAccessToken(code);
@@ -47,15 +49,12 @@ public class KakaoUserService {
         User kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfo);
 
         UserDetails userDetails = new UserDetailsImpl(kakaoUser);
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(kakaoUser.getKakaoId(), kakaoUser.getPassword());
 
-        //토큰으로 Authentication 객체 만듦
         // authentication메소드가 실행될때
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());//여기서 LoginUserDetails에 있는 loadUserByUsername 실행
         //그 결과로 AUthentication 만들어서 Security context에 넣어줌
-        //이건 인증된 결과, 요청 둘다 되는 메소드
 
+        //이건 인증된 결과, 요청 둘다 되는 메소드
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         //jwt 토큰 만들기
@@ -65,8 +64,7 @@ public class KakaoUserService {
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
         return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
-        // 4. 강제 로그인 처리
-        //forceLogin(kakaoUser);
+
     }
 
     private String getAccessToken(String code) throws JsonProcessingException {
@@ -78,7 +76,7 @@ public class KakaoUserService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "a099ba48b51cee72bb46feaa603ef1a1");
-        body.add("redirect_uri", "http://localhost:8080/albba/kakao/callback");
+        body.add("redirect_uri", CALLBACK_ADDR);
         body.add("code", code);
 
         // HTTP 요청 보내기
@@ -147,19 +145,12 @@ public class KakaoUserService {
             Authority authority = new Authority();
             authority.setAuthorityName("ROLE_USER");
 
-            User user = new User(kakaoId.toString(), password, email, nickname,phone_number,kakaoId);
+            User user = new User(kakaoId.toString(), encodedPassword, email, nickname,phone_number,kakaoId);
             user.setAuthorities(Collections.singleton(authority));
             userRepository.save(user);
             return user;
         }
         return kakaoUser;
     }
-/*
-   private void forceLogin(User kakaoUser) {
-        UserDetails userDetails = new UserDetailsImpl(kakaoUser);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
 
-*/
 }
