@@ -14,17 +14,26 @@ import java.util.List;
 @Service
 public class CommuteService {
     private final CommuteRepository commuteRepository;
-    public Commute insert(StartDto startdto){
-        Commute commute = new Commute(startdto);
-        commuteRepository.save(commute);
-        return commute;
+    public int insert(StartDto startdto){
+        try{
+            Commute commute = new Commute(startdto);
+            commuteRepository.save(commute);
+            return 1;
+        } catch(Exception e){
+            return -1;
+        }
     }
 
-    public Commute update(EndDto endDto){
-        Commute commute = commuteRepository.findCommuteByUserIdAndStoreIdAndDate(endDto.getUserId(), endDto.getStoreId(), endDto.getDate()).orElseThrow(() -> new NullPointerException("출근 정보가 존재하지 않습니다."));
-        commute.setEnd(endDto.getEnd());
-        commuteRepository.save(commute);
-        return commute;
+    public int update(EndDto endDto){
+        try{
+            Commute commute = commuteRepository.findCommuteByUserIdAndStoreIdAndDate(endDto.getUserId(), endDto.getStoreId(), endDto.getDate()).orElseThrow(() -> new NullPointerException("출근 정보가 존재하지 않습니다."));
+            commute.setEnd(endDto.getEnd());
+            commuteRepository.save(commute);
+            return 1;
+        } catch(Exception e){
+            return -1;
+        }
+
     }
 
     public List<Commute> List(ListDto listdto){

@@ -20,13 +20,23 @@ public class CommuteController {
     private final CommuteService commuteService;
 
     @PostMapping(path ="/start") // http://localhost/albba/commute/start
-    public Commute Start(@RequestBody StartDto startdto) {
-        return commuteService.insert(startdto);
+    public String Start(@RequestBody StartDto startdto) {
+        int flag = commuteService.insert(startdto);
+        if(flag == 1){
+            return "출근 성공";
+        } else{
+            return "출근 실패";
+        }
     }
 
     @PostMapping(path ="/end") // http://localhost/albba/commute/end
-    public Commute End(@RequestBody EndDto endDto) {
-       return commuteService.update(endDto);
+    public String End(@RequestBody EndDto endDto) {
+        int flag = commuteService.update(endDto);
+        if(flag == 1){
+            return "퇴근 성공";
+        } else{
+            return "퇴근 실패";
+        }
     }
 
     @PostMapping(path ="/list") // http://localhost/albba/commute/list
