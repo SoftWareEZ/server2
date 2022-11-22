@@ -43,14 +43,14 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody LoginDto loginDto) {
 
-        System.out.println(loginDto.getUsername()+" "+loginDto.getPassword());
+
         //@RequestBody로 객체 받아와서 바탕으로 UsernamePasswordAuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 
         //토큰으로 Authentication 객체 만듦
-        System.out.println("sasdfasd");
-        System.out.println(authenticationManagerBuilder.getObject().authenticate(authenticationToken));
+
+
         // authentication메소드가 실행될때
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);//여기서 LoginUserDetails에 있는 loadUserByUsername 실행
         //그 결과로 AUthentication 만들어서 Security context에 넣어줌
@@ -94,26 +94,7 @@ public class LoginController {
     public ResponseEntity<TokenDto> kakaoLogin(@RequestParam String code) throws JsonProcessingException {
         // authorizedCode: 카카오 서버로부터 받은 인가 코드
         return kakaoUserService.kakaoLogin(code);
-        //여까진 실행 다 됐고
-//@RequestBody로 객체 받아와서 바탕으로 UsernamePasswordAuthenticationToken 생성
-       /* UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getKakaoId(), loginDto.getPassword());
 
-        //토큰으로 Authentication 객체 만듦
-        // authentication메소드가 실행될때
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);//여기서 LoginUserDetails에 있는 loadUserByUsername 실행
-        //그 결과로 AUthentication 만들어서 Security context에 넣어줌
-        //이건 인증된 결과, 요청 둘다 되는 메소드
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        //jwt 토큰 만들기
-        String jwt = tokenProvider.createToken(authentication);
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-
-        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);*/
     }
 
 
