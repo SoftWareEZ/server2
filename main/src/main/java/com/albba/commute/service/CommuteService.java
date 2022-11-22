@@ -16,6 +16,9 @@ public class CommuteService {
     private final CommuteRepository commuteRepository;
     public int insert(StartDto startdto){
         try{
+            if(commuteRepository.findCommuteByUserIdAndStoreIdAndDate(startdto.getUserId(), startdto.getStoreId(), startdto.getDate()).isPresent()){
+                return -2;
+            }
             Commute commute = new Commute(startdto);
             commuteRepository.save(commute);
             return 1;

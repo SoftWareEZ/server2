@@ -24,7 +24,10 @@ public class CommuteController {
         int flag = commuteService.insert(startdto);
         if(flag == 1){
             return "출근 성공";
-        } else{
+        } else if(flag == -2){
+            return "이미 출근된 상태입니다.";
+        }
+        else{
             return "출근 실패";
         }
     }
