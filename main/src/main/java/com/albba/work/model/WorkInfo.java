@@ -13,7 +13,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class WorkInfo{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "no")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer no;
 
     @Column(name = "user_id")
@@ -25,7 +26,7 @@ public class WorkInfo{
     @Column
     private int wage;
     @Column
-    private int account;
+    private String account;
 
     @Column
     private String mon_start, mon_end;
@@ -48,7 +49,7 @@ public class WorkInfo{
     @Column
     private String sun_start, sun_end;
 
-    public WorkInfo(Long userId, Long storeId, int wage, int account,
+    public WorkInfo(Long userId, Long storeId, int wage, String account,
                     String mon_start, String mon_end, String tue_start, String tue_end, String wed_start, String wed_end,
                     String thu_start, String thu_end, String fri_start, String fri_end, String sat_start, String sat_end,
                     String sun_start, String sun_end){
@@ -79,9 +80,37 @@ public class WorkInfo{
         this.sun_end = sun_end;
     }
 
-    public WorkInfo(WorkInfoDto workInfoDto){
-        this.userId = workInfoDto.getUserId();
-        this.storeId = workInfoDto.getStoreId();
+    public WorkInfo(Long userId, Long storeId, int wage, String account){
+        this.userId = userId;
+        this.storeId = storeId;
+        this.wage = wage;
+        this.account = account;
+
+        this.mon_start = null;
+        this.mon_end = null;
+
+        this.tue_start = null;
+        this.tue_end = null;
+
+        this.wed_start = null;
+        this.wed_end = null;
+
+        this.thu_start = null;
+        this.thu_end = null;
+
+        this.fri_start = null;
+        this.fri_end = null;
+
+        this.sat_start = null;
+        this.sat_end = null;
+
+        this.sun_start = null;
+        this.sun_end = null;
+    }
+
+    public WorkInfo(Long userId, Long storeId, WorkInfoDto workInfoDto){
+        this.userId = userId;
+        this.storeId = storeId;
         this.wage = workInfoDto.getWage();
         this.account = workInfoDto.getAccount();
 

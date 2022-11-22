@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class WorkInfoDto {
-    private Long userId;
-    private Long storeId;
+public class InfoDto {
     private int wage;
     private String account;
 
