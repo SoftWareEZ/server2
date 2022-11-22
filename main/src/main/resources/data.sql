@@ -8,7 +8,9 @@ insert into user_authority (user_id, authority_name) values (1, 'ROLE_USER');
 insert into user_authority (user_id, authority_name) values (1, 'ROLE_ADMIN');
 insert into user_authority (user_id, authority_name) values (2, 'ROLE_USER');
 
--- insert into commute (commute_id, user_id, store_id, date, start, end) values (1, 1, 1, '2022-11-21', '11:21', '12:22');
--- insert into commute (commute_id, user_id, store_id, date, start, end) values (2, 1, 1, '2022-11-22', '11:21', '12:22');
--- insert into commute (commute_id, user_id, store_id, date, start, end) values (3, 1, 2, '2022-11-23', '11:21', '12:22');
--- insert into commute (commute_id, user_id, store_id, date, start, end) values (4, 2, 1, '2022-11-21', '11:21', '12:22');
+insert into commute (commute_id, user_id, store_id, date, start, end) values (1, 1, 1, '2022-11-21', '11:21', '12:22');
+insert into commute (commute_id, user_id, store_id, date, start, end) values (2, 1, 1, '2022-11-22', '11:21', '12:22');
+insert into commute (commute_id, user_id, store_id, date, start, end) values (3, 1, 2, '2022-11-23', '11:21', '12:22');
+insert into commute (commute_id, user_id, store_id, date, start, end) values (4, 2, 1, '2022-11-21', '11:21', '12:22');
+
+insert into store (user_id, code, store_name, store_addr) values (1, 75124324, 'momstouch', 'seoul');

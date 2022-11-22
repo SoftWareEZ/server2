@@ -3,14 +3,14 @@ package com.albba.work.repository;
 import com.albba.work.model.Store;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
 public interface StoreRepository extends JpaRepository<Store, Long> {
-    // Optional<Store> findById(Long userId);
     Optional<Store> findByUserId(Long userId);
     Optional<Store> findById(Long storeId);
-    Optional<Store> findByCode(String code);
+    Store findByCode(String code);
 
     default String makeCode(){
         Random random = new Random();

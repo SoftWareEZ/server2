@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
+
 @RequiredArgsConstructor
 @Service
 public class WorkInfoService{
@@ -17,15 +18,16 @@ public class WorkInfoService{
 
     public WorkInfo joinStore(CodeDto codeDto, Long userId){
         String codeName = codeDto.getCode();
-        Store store = storeRepository.findByCode(codeName).get();
-        
-//        if(codeName.isEqual()){
-//
-//        }
+        Store store = storeRepository.findByCode(codeName);
 
-        WorkInfo workInfo = new WorkInfo(userId, store.getStoreId(), 0, 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-        workInfoRepository.save(workInfo);
-
-        return workInfo;
+        if(codeName.equals(store.getCode())){
+            WorkInfo workInfo = new WorkInfo(userId, store.getStoreId(), 0, 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            workInfoRepository.save(workInfo);
+            return workInfo;
+        }
+        else {
+            System.out.println("store 초대코드와 일치하지 않습니다");
+            return null;
+        }
     }
 }
