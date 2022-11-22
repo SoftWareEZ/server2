@@ -8,7 +8,7 @@ import java.util.Random;
 
 public interface StoreRepository extends JpaRepository<Store, Long> {
     // Optional<Store> findById(Long userId);
-
+    Optional<Store> findByUserId(Long userId);
     Optional<Store> findById(Long storeId);
     Optional<Store> findByCode(String code);
 
