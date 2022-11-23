@@ -36,9 +36,9 @@ public class WorkInfoController {
     }
 
     //한달 근무표
-//    @GetMapping("/{storeId}/{day_start}/{day_end}")
-//    @PreAuthorize("hasAnyRole('ADMIN','USER')")
-//    public List<WorkInfo> getWorkSchedule(@PathVariable Long storeId, @PathVariable String day_start, @PathVariable String day_end){
-//
-//    }
+    @GetMapping("/{storeId}/{day}")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    public List<WorkInfo> getWorkSchedule(@PathVariable Long storeId, @PathVariable String day){
+        return workInfoService.getWorkSchedule(storeId, day);
+    }
 }

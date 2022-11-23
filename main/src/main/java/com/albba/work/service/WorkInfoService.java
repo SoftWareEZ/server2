@@ -2,7 +2,7 @@ package com.albba.work.service;
 
 import com.albba.work.dto.CodeDto;
 import com.albba.work.dto.InfoDto;
-import com.albba.work.dto.WorkInfoDto;
+import com.albba.work.dto.ScheduleDto;
 import com.albba.work.model.Store;
 import com.albba.work.model.WorkInfo;
 import com.albba.work.repository.StoreRepository;
@@ -10,7 +10,6 @@ import com.albba.work.repository.WorkInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 
@@ -44,25 +43,57 @@ public class WorkInfoService{
         return workInfoRepository.findByUserId(userId);
     }
 
+    public List<WorkInfo> getWorkSchedule(Long storeId, String day){
+        List<WorkInfo> work;
+        switch(day){
+            case "mon":
+                work = workInfoRepository.findByStoreIdAndMonStartIsNotNull(storeId);
+                break;
+            case "tue":
+                work = workInfoRepository.findByStoreIdAndTueStartIsNotNull(storeId);
+                break;
+            case "wed":
+                work = workInfoRepository.findByStoreIdAndWedStartIsNotNull(storeId);
+                break;
+            case "thu":
+                work = workInfoRepository.findByStoreIdAndThuStartIsNotNull(storeId);
+                break;
+            case "fri":
+                work = workInfoRepository.findByStoreIdAndFriStartIsNotNull(storeId);
+                break;
+            case "sat":
+                work = workInfoRepository.findByStoreIdAndSatStartIsNotNull(storeId);
+                break;
+            case "sun":
+                work = workInfoRepository.findByStoreIdAndSunStartIsNotNull(storeId);
+                break;
+            default:
+                return null;
+        }
+        return work;
+//        List<ScheduleDto> schedule;
+//        schedule.
+    }
+
     public WorkInfo updateWorker(Long userId, InfoDto infoDto){
         WorkInfo work = workInfoRepository.findByUserId(userId);
         work.setWage(infoDto.getWage());
         work.setAccount(infoDto.getAccount());
 
-        work.setMon_start(infoDto.getMon_start());
-        work.setMon_end(infoDto.getMon_end());
-        work.setTue_start(infoDto.getTue_start());
-        work.setTue_end(infoDto.getTue_end());
-        work.setWed_start(infoDto.getWed_start());
-        work.setWed_end(infoDto.getWed_end());
-        work.setThu_start(infoDto.getThu_start());
-        work.setThu_end(infoDto.getThu_end());
-        work.setFri_start(infoDto.getFri_start());
-        work.setFri_end(infoDto.getFri_end());
-        work.setSat_start(infoDto.getSat_start());
-        work.setSat_end(infoDto.getSat_end());
-        work.setSun_start(infoDto.getSun_start());
-        work.setSun_end(infoDto.getSun_end());
+        work.setMonStart(infoDto.getMon_start());
+        work.setMonEnd(infoDto.getMon_end());
+        work.setTueStart(infoDto.getTue_start());
+        work.setTueEnd(infoDto.getTue_end());
+        work.setWedStart(infoDto.getWed_start());
+        work.setWedEnd(infoDto.getWed_end());
+        work.setThuStart(infoDto.getThu_start());
+        work.setThuEnd(infoDto.getThu_end());
+        work.setFriStart(infoDto.getFri_start());
+        work.setFriEnd(infoDto.getFri_end());
+        work.setSatStart(infoDto.getSat_start());
+        work.setSatEnd(infoDto.getSat_end());
+        work.setSunStart(infoDto.getSun_start());
+        work.setSunEnd(infoDto.getSun_end());
         return workInfoRepository.save(work);
     }
 }
