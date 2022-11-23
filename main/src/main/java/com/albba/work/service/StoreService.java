@@ -23,10 +23,15 @@ public class StoreService {
         return store;
     }
 
-    //사업장 조회
+    //모든 사업장 조회
     public List<Store> getStore() throws SQLException {
         List<Store> stores = storeRepository.findAll();
         return stores;
+    }
+
+    //특정 사업장 조회
+    public Store getStoreById(Long storeId){
+        return storeRepository.findByStoreId(storeId);
     }
 
     //초대코드 조회

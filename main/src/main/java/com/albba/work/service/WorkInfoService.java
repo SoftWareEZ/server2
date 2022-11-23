@@ -35,9 +35,13 @@ public class WorkInfoService{
         }
     }
 
-    public List<WorkInfo> getWorker() throws SQLException {
-        List<WorkInfo> works = workInfoRepository.findAll();
+    public List<WorkInfo> getWorker(Long storeId) {
+        List<WorkInfo> works = workInfoRepository.findByStoreId(storeId);
         return works;
+    }
+
+    public WorkInfo getWorkerById(Long userId){
+        return workInfoRepository.findByUserId(userId);
     }
 
     public WorkInfo updateWorker(Long userId, InfoDto infoDto){

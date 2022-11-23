@@ -29,21 +29,31 @@ public class StoreController {
 
     //사업장 조회
     @GetMapping("/store/list")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public List<Store> getStore()throws SQLException {
         return storeService.getStore();
     }
 
-    //사업장 초대코드 만들기
-    @PostMapping("/store/invite/{storeId}")
+    //사업장 초대코드 조회
+    @GetMapping("/store/invite/{storeId}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public String sendCode(@PathVariable Long storeId){
         return storeService.getCode(storeId);
     }
 
     //입사한 알바생 조회
-    @GetMapping("/store/worker/list")
-    public List<WorkInfo> getWorker() throws SQLException{
-        return workInfoService.getWorker();
+    @GetMapping("/store/{storeId}/worker/list")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public List<WorkInfo> getWorker(@PathVariable Long storeId){
+        return workInfoService.getWorker(storeId);
+    }
+
+    //어차피 특정 알바생 클릭해서 조회하고 바꾸는거니까 storeId는 필요없다 생각해서 url에 뺌
+    //입사한 특정 알바생 조회
+    @GetMapping("/store/worker/list/{userId}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public WorkInfo getWorkerById(@PathVariable Long userId){
+        return workInfoService.getWorkerById(userId);
     }
     
     //알바생 알바정보 update

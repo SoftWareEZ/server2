@@ -9,7 +9,7 @@ import java.util.Random;
 
 public interface StoreRepository extends JpaRepository<Store, Long> {
     Optional<Store> findByUserId(Long userId);
-    Optional<Store> findById(Long storeId);
+    Store findByStoreId(Long storeId);
     Store findByCode(String code);
 
     default String makeCode(){
