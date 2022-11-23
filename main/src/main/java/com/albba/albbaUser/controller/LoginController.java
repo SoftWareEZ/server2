@@ -1,9 +1,6 @@
 package com.albba.albbaUser.controller;
 
-import com.albba.albbaUser.dto.LoginDto;
-import com.albba.albbaUser.dto.SignupRequestDto;
-import com.albba.albbaUser.dto.TokenDto;
-import com.albba.albbaUser.dto.UserInfoFrontDto;
+import com.albba.albbaUser.dto.*;
 import com.albba.albbaUser.entity.User;
 import com.albba.albbaUser.jwt.JwtFilter;
 import com.albba.albbaUser.jwt.TokenProvider;
@@ -67,7 +64,28 @@ public class LoginController {
 
         return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
     }
+    @PostMapping("/kakao/login")
+    public ResponseEntity<TokenDto> kakaoLogin(@RequestBody KakaoLoginRequestDto requestDto) {
 
+        User user = userService.KakaoLogin(requestDto);
+        System.out.println("왜안되는거야 시발ㄹㄹ");
+        //userDetails로  Authentication 객체 만듦
+        UserDetails userDetails = new UserDetailsImpl(user);
+
+        // authentication메소드가 실행될때
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+        //그 결과로 AUthentication 만들어서 Security context에 넣어줌
+        //이건 인증된 결과, 요청 둘다 되는 메소드
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        //jwt 토큰 만들기
+        String jwt = tokenProvider.createToken(authentication);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+
+    }
     @PostMapping("/signup")
     public void signup(@RequestBody SignupRequestDto requestDto) {
 
@@ -91,7 +109,7 @@ public class LoginController {
     //주석달랭
     //패스워드 변경은?
     @GetMapping("/kakao/callback")
-    public ResponseEntity<TokenDto> kakaoLogin(@RequestParam String code) throws JsonProcessingException {
+    public ResponseEntity<TokenDto> kakaoLogin2(@RequestParam String code) throws JsonProcessingException {
         // authorizedCode: 카카오 서버로부터 받은 인가 코드
         return kakaoUserService.kakaoLogin(code);
 

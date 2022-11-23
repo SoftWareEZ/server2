@@ -1,5 +1,6 @@
 package com.albba.albbaUser.service;
 
+import com.albba.albbaUser.dto.KakaoLoginRequestDto;
 import com.albba.albbaUser.dto.SignupRequestDto;
 import com.albba.albbaUser.dto.UserInfoFrontDto;
 import com.albba.albbaUser.entity.Authority;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 
@@ -37,6 +39,36 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
         this.storeRepository = storeRepository;
     }
+
+    //
+    public User KakaoLogin(KakaoLoginRequestDto requestDto){
+        String username = requestDto.getUsername();
+        Optional<User> found = userRepository.findByUsername(username);
+
+        if (!found.isPresent()) {
+            String password = UUID.randomUUID().toString();
+            String encodedPassword = passwordEncoder.encode(password);
+            String email = requestDto.getEmail();
+
+            String phone_number = null;
+
+
+            Authority authority = new Authority();
+            authority.setAuthorityName("ROLE_USER");
+
+            User user = new User(requestDto.getUsername(), encodedPassword, email, requestDto.getRealname(),phone_number,Long.parseLong(requestDto.getUsername()));
+            user.setAuthorities(Collections.singleton(authority));
+            userRepository.save(user);
+            return user;
+        }
+
+
+
+
+        return found.get();
+
+    }
+
 
     //테스트용
     public List<User> UserList() {

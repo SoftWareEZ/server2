@@ -26,17 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
-    /*public SecurityConfig(
-            TokenProvider tokenProvider,
-            CorsFilter corsFilter,
-            JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-            JwtAccessDeniedHandler jwtAccessDeniedHandler
-    ) {
-        this.tokenProvider = tokenProvider;
-        this.corsFilter = corsFilter;
-        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-        this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
-    }*/
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -85,6 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/albba/login").permitAll()
                 .antMatchers("/albba/signup").permitAll()
                 .antMatchers("/albba/kakao/callback").permitAll()
+                .antMatchers("/albba/kakao/login").permitAll()
                 //나머지는 401
                 .anyRequest().authenticated()
 
