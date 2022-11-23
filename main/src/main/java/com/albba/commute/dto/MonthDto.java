@@ -3,23 +3,17 @@ package com.albba.commute.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
-public class EndDto {
+public class MonthDto {
     private Long userId;
 
     private Long storeId;
 
-    @JsonFormat(pattern = "YY")
-    private String year;
-
     @JsonFormat(pattern = "MM")
     private String month;
 
-    @JsonFormat(pattern = "dd")
-    private String day;
-
-    @JsonFormat(pattern = "HH:mm")
-    private String end;
+    private double time;
 }

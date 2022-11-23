@@ -2,6 +2,7 @@ package com.albba.commute.controller;
 
 import com.albba.commute.dto.EndDto;
 import com.albba.commute.dto.ListDto;
+import com.albba.commute.dto.MonthDto;
 import com.albba.commute.dto.StartDto;
 import com.albba.commute.model.Commute;
 import com.albba.commute.service.CommuteService;
@@ -46,4 +47,7 @@ public class CommuteController {
     public List<Commute> List(@RequestBody ListDto listDto) {
         return commuteService.List(listDto);
     }
+
+    @PostMapping(path = "/month")
+    public List<Commute> Month(@RequestBody MonthDto monthDto) {return commuteService.Month(monthDto);}
 }

@@ -1,6 +1,7 @@
 package com.albba.commute.model;
 
 import com.albba.commute.dto.EndDto;
+import com.albba.commute.dto.MonthDto;
 import com.albba.commute.dto.StartDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 public class Commute {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "commute_id")
     private Long no;
@@ -26,8 +27,14 @@ public class Commute {
     private Long storeId;
 
     @Column(nullable = false)
-    @JsonFormat(pattern = "YYYY-MM-dd")
-    private String date;
+    @JsonFormat(pattern = "YY")
+    private String year;
+
+    @JsonFormat(pattern = "MM")
+    private String month;
+
+    @JsonFormat(pattern = "dd")
+    private String day;
 
     @Column(nullable = false)
     @JsonFormat(pattern = "HH:mm")
@@ -37,16 +44,30 @@ public class Commute {
     @JsonFormat(pattern = "HH:mm")
     private String end;
 
+    @Column
+    private double time;
+
     public Commute(StartDto startdto){
         this.userId = startdto.getUserId();
         this.storeId = startdto.getStoreId();
-        this.date = startdto.getDate();
+        this.year = startdto.getYear();
+        this.month = startdto.getMonth();
+        this.day = startdto.getDay();
         this.start = startdto.getStart();
     }
     public Commute(EndDto endDto){
         this.userId = endDto.getUserId();
         this.storeId = endDto.getStoreId();
-        this.date = endDto.getDate();
+        this.year = endDto.getYear();
+        this.month = endDto.getMonth();
+        this.day = endDto.getDay();
         this.end = endDto.getEnd();
+    }
+
+    public Commute(MonthDto monthDto) {
+        this.userId = monthDto.getUserId();
+        this.storeId = monthDto.getStoreId();
+        this.month = monthDto.getMonth();
+        this.time = monthDto.getTime();
     }
 }

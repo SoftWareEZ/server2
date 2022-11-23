@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class StartDto {
@@ -12,9 +14,15 @@ public class StartDto {
 
     private Long storeId;
 
-    @JsonFormat(pattern = "YYYY-MM-dd")
-    private String date;
+    @JsonFormat(pattern = "YY")
+    private String year;
+
+    @JsonFormat(pattern = "MM")
+    private String month;
+
+    @JsonFormat(pattern = "dd")
+    private String day;
 
     @JsonFormat(pattern = "HH:mm")
-    private String start;
+    private  String start;
 }
