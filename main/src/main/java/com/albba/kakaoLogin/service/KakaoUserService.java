@@ -36,7 +36,7 @@ public class KakaoUserService {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public static String CALLBACK_ADDR= "http://localhost:8080/albba/kakao/callback";
+    public static String CALLBACK_ADDR= "http://172.20.48.85:0880/albba/kakao/callback";
 
     public ResponseEntity<TokenDto> kakaoLogin(String code) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청
