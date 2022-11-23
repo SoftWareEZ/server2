@@ -1,15 +1,19 @@
 package com.albba.work.service;
 
+import com.albba.albbaUser.repository.UserRepository;
 import com.albba.work.dto.CodeDto;
 import com.albba.work.dto.InfoDto;
 import com.albba.work.dto.ScheduleDto;
+import com.albba.work.model.Schedule;
 import com.albba.work.model.Store;
 import com.albba.work.model.WorkInfo;
+import com.albba.work.repository.ScheduleRepository;
 import com.albba.work.repository.StoreRepository;
 import com.albba.work.repository.WorkInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,6 +22,8 @@ import java.util.List;
 public class WorkInfoService{
     private final WorkInfoRepository workInfoRepository;
     private final StoreRepository storeRepository;
+    private final UserRepository userRepository;
+    private final ScheduleRepository scheduleRepository;
 
     public WorkInfo joinStore(CodeDto codeDto, Long userId){
         String codeName = codeDto.getCode();
@@ -43,36 +49,96 @@ public class WorkInfoService{
         return workInfoRepository.findByUserId(userId);
     }
 
-    public List<WorkInfo> getWorkSchedule(Long storeId, String day){
+    public List<Schedule> getWorkSchedule(Long storeId, String day){
         List<WorkInfo> work;
-        switch(day){
+        List<Schedule> schedule = new ArrayList<>();
+        switch(day) {
             case "mon":
                 work = workInfoRepository.findByStoreIdAndMonStartIsNotNull(storeId);
-                break;
+                if(work.isEmpty()) return null;
+                for (WorkInfo workInfo : work) {
+                    Schedule s = new Schedule();
+                    s.setStart(workInfo.getMonStart());
+                    s.setEnd(workInfo.getMonEnd());
+                    s.setName((userRepository.getById(workInfo.getUserId()).getRealname()));
+                    schedule.add(s);
+                }
+                return schedule;
             case "tue":
                 work = workInfoRepository.findByStoreIdAndTueStartIsNotNull(storeId);
-                break;
+                if(work.isEmpty()) return null;
+                for (WorkInfo workInfo : work) {
+                    Schedule s = new Schedule();
+                    s.setStart(workInfo.getTueStart());
+                    s.setEnd(workInfo.getTueEnd());
+                    s.setName((userRepository.getById(workInfo.getUserId()).getRealname()));
+                    schedule.add(s);
+                }
+                return schedule;
             case "wed":
                 work = workInfoRepository.findByStoreIdAndWedStartIsNotNull(storeId);
-                break;
+                if(work.isEmpty()) return null;
+                for (WorkInfo workInfo : work) {
+                    Schedule s = new Schedule();
+                    s.setStart(workInfo.getWedStart());
+                    s.setEnd(workInfo.getWedEnd());
+                    s.setName((userRepository.getById(workInfo.getUserId()).getRealname()));
+                    schedule.add(s);
+                }
+                return schedule;
             case "thu":
                 work = workInfoRepository.findByStoreIdAndThuStartIsNotNull(storeId);
-                break;
+                if(work.isEmpty()) return null;
+                for (WorkInfo workInfo : work) {
+                    Schedule s = new Schedule();
+                    s.setStart(workInfo.getThuStart());
+                    s.setEnd(workInfo.getThuEnd());
+                    s.setName((userRepository.getById(workInfo.getUserId()).getRealname()));
+                    schedule.add(s);
+                }
+                return schedule;
             case "fri":
                 work = workInfoRepository.findByStoreIdAndFriStartIsNotNull(storeId);
-                break;
+                if(work.isEmpty()) return null;
+                for (WorkInfo workInfo : work) {
+                    Schedule s = new Schedule();
+                    s.setStart(workInfo.getFriStart());
+                    s.setEnd(workInfo.getFriEnd());
+                    s.setName((userRepository.getById(workInfo.getUserId()).getRealname()));
+                    schedule.add(s);
+                }
+                return schedule;
             case "sat":
                 work = workInfoRepository.findByStoreIdAndSatStartIsNotNull(storeId);
-                break;
+                if(work.isEmpty()) return null;
+                for (WorkInfo workInfo : work) {
+                    Schedule s = new Schedule();
+                    s.setStart(workInfo.getSatStart());
+                    s.setEnd(workInfo.getSatEnd());
+                    s.setName((userRepository.getById(workInfo.getUserId()).getRealname()));
+                    schedule.add(s);
+                }
+                return schedule;
             case "sun":
                 work = workInfoRepository.findByStoreIdAndSunStartIsNotNull(storeId);
-                break;
+                if(work.isEmpty()) return null;
+                for (WorkInfo workInfo : work) {
+                    Schedule s = new Schedule();
+                    s.setStart(workInfo.getSunStart());
+                    s.setEnd(workInfo.getSunEnd());
+                    s.setName((userRepository.getById(workInfo.getUserId()).getRealname()));
+                    schedule.add(s);
+                }
+                return schedule;
             default:
                 return null;
         }
-        return work;
-//        List<ScheduleDto> schedule;
-//        schedule.
+
+//        List<ScheduleDto> schedule = new ArrayList<ScheduleDto>();
+//        ScheduleDto s;
+//        for(int i= 0 ; i < work.size(); i++){
+//            s.setStart(work.get(i).);
+//        }
     }
 
     public WorkInfo updateWorker(Long userId, InfoDto infoDto){

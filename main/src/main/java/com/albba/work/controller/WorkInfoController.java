@@ -1,6 +1,8 @@
 package com.albba.work.controller;
 
 import com.albba.work.dto.CodeDto;
+import com.albba.work.dto.ScheduleDto;
+import com.albba.work.model.Schedule;
 import com.albba.work.model.Store;
 import com.albba.work.model.WorkInfo;
 import com.albba.work.service.StoreService;
@@ -38,7 +40,7 @@ public class WorkInfoController {
     //한달 근무표
     @GetMapping("/{storeId}/{day}")
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
-    public List<WorkInfo> getWorkSchedule(@PathVariable Long storeId, @PathVariable String day){
+    public List<Schedule> getWorkSchedule(@PathVariable Long storeId, @PathVariable String day){
         return workInfoService.getWorkSchedule(storeId, day);
     }
 }
