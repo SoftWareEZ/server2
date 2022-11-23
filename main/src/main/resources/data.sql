@@ -1,4 +1,4 @@
-insert into user (username, password, email,realname,phone_number) values ('admin', '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', 'admin@','조행래','010-7638-0028');
+insert into user (username, password, email,realname,phone_number) values ('admin', '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', 'admin@','김민주','010-7638-0028');
 insert into user (username, password, email,realname,phone_number) values ('momju', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'user@','김맘주','010-0000-0000');
 insert into user (username, password, email,realname,phone_number) values ('min', '$2a$10$sg2gYiGFTPvqoebJkC/f4erLz.Q8x3ljfAr0P.jeRzhW3uyov56iu', 'hibye@naver.com	','신혜민','010-0000-0000');
 insert into user (username, password, email,realname,phone_number) values ('jin', '$2a$10$sg2gYiGFTPvqoebJkC/f4erLz.Q8x3ljfAr0P.jeRzhW3uyov56iu', 'sujin@naver.com	','안수진','010-0000-0000');
