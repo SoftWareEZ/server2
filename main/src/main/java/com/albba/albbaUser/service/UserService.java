@@ -56,7 +56,7 @@ public class UserService {
             Authority authority = new Authority();
             authority.setAuthorityName("ROLE_USER");
 
-            User user = new User(requestDto.getUsername(), encodedPassword, email, requestDto.getRealname(),phone_number,Long.parseLong(requestDto.getUsername()));
+            User user = new User(requestDto.getUsername(), encodedPassword, email, requestDto.getRealname(),phone_number,requestDto.getUsername());
             user.setAuthorities(Collections.singleton(authority));
             userRepository.save(user);
             return user;

@@ -35,7 +35,7 @@ public class User {
     private String phone_number;
 
     @Column(unique = true)
-    private Long kakaoId;
+    private String kakaoId;
 
     @ManyToMany
     @JoinTable(
@@ -55,7 +55,7 @@ public class User {
 
     }
 
-    public User(String username, String password, String email,String realname,String phone_number,Long kakaoId) {
+    public User(String username, String password, String email,String realname,String phone_number,String kakaoId) {
         this.username = username;
         this.password = password;
         this.email = email;
