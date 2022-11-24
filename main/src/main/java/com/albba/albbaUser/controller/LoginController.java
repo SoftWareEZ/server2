@@ -68,7 +68,7 @@ public class LoginController {
     public ResponseEntity<TokenDto> kakaoLogin(@RequestBody KakaoLoginRequestDto requestDto) {
 
         User user = userService.KakaoLogin(requestDto);
-        System.out.println("왜안되는거야 시발ㄹㄹ");
+
         //userDetails로  Authentication 객체 만듦
         UserDetails userDetails = new UserDetailsImpl(user);
 
@@ -90,7 +90,7 @@ public class LoginController {
     public void signup(@RequestBody SignupRequestDto requestDto) {
 
         userService.registerUser(requestDto);
-        return ;
+
 
     }
     //이름 가져오는 부분인데 굳이 이거말고 정보 가져오는 메소드로 하자
