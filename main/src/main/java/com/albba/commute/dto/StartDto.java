@@ -14,7 +14,7 @@ public class StartDto {
 
     private Long storeId;
 
-    @JsonFormat(pattern = "YY")
+    @JsonFormat(pattern = "yyyy")
     private String year;
 
     @JsonFormat(pattern = "MM")

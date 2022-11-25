@@ -27,7 +27,7 @@ public class Commute {
     private Long storeId;
 
     @Column(nullable = false)
-    @JsonFormat(pattern = "YY")
+    @JsonFormat(pattern = "yyyy")
     private String year;
 
     @JsonFormat(pattern = "MM")

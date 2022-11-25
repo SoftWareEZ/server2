@@ -11,7 +11,7 @@ public class EndDto {
 
     private Long storeId;
 
-    @JsonFormat(pattern = "YY")
+    @JsonFormat(pattern = "yyyy")
     private String year;
 
     @JsonFormat(pattern = "MM")
