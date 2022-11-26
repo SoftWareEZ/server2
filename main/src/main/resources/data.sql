@@ -22,7 +22,7 @@ insert into user_authority (user_id, authority_name) values (7, 'ROLE_USER');
 
 
 insert into store (user_id, code, store_name, store_addr) values (1, 75124324, '맘스터치 영대점', '경북 경산시 대동');
-insert into store (user_id, code, store_name, store_addr) values (2, 40487753, '김해뒷고기 영대점', '경북 경산시 조영동');
+insert into store (user_id, code, store_name, store_addr) values (1, 40487753, '김해뒷고기 영대점', '경북 경산시 조영동');
 
 
 insert into work_info(user_id, store_id, wage, account, activated, mon_start, mon_end, tue_start, tue_end, wed_start, wed_end, thu_start, thu_end, fri_start, fri_end, sat_start, sat_end, sun_start, sun_end) values (2, 2, 10000, '1111-22222-44444', true,'null', 'null', '10:00', '16:00', '14:30', '18:00', 'null', 'null', '09:00', '13:00','09:00', '13:00', 'null', 'null');
