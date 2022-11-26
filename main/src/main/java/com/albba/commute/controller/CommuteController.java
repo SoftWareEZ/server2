@@ -7,10 +7,7 @@ import com.albba.commute.dto.StartDto;
 import com.albba.commute.model.Commute;
 import com.albba.commute.service.CommuteService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -48,6 +45,6 @@ public class CommuteController {
         return commuteService.List(listDto);
     }
 
-    @PostMapping(path = "/month")
-    public List<Commute> Month(@RequestBody MonthDto monthDto) {return commuteService.Month(monthDto);}
+    @PostMapping(path = "/month/{userId}")
+    public int Month(@PathVariable Long userId, @RequestBody MonthDto monthDto) {return commuteService.Month(userId, monthDto);}
 }

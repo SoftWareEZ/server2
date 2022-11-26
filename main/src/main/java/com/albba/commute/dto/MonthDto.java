@@ -12,6 +12,9 @@ public class MonthDto {
 
     private Long storeId;
 
+    @JsonFormat(pattern = "yyyy")
+    private String year;
+
     @JsonFormat(pattern = "MM")
     private String month;
 

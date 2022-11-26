@@ -46,7 +46,12 @@ public class CommuteService {
         return commuteRepository.findCommuteByUserId(listdto.getUserId());
     }
 
-    public List<Commute> Month(MonthDto monthDto){
-       return commuteRepository.findCommuteByStoreIdAndMonthAndUserId(monthDto.getStoreId(), monthDto.getMonth(), monthDto.getUserId());
+    public int Month(Long userId, MonthDto monthDto){
+        int min = 0;
+       List<Commute> commute = commuteRepository.findCommuteByUserIdAndStoreIdAndYearAndMonth(userId, monthDto.getStoreId(), monthDto.getYear(), monthDto.getMonth());
+       for(int i = 0; i < commute.size(); i++){
+           min += commute.get(i).getTime();
+       }
+       return min;
     }
 }
