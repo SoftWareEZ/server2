@@ -3,7 +3,6 @@ package com.albba.work.service;
 import com.albba.albbaUser.repository.UserRepository;
 import com.albba.work.dto.CodeDto;
 import com.albba.work.dto.InfoDto;
-import com.albba.work.dto.ScheduleDto;
 import com.albba.work.model.Schedule;
 import com.albba.work.model.Store;
 import com.albba.work.model.WorkInfo;
@@ -23,25 +22,28 @@ public class WorkInfoService{
     private final WorkInfoRepository workInfoRepository;
     private final StoreRepository storeRepository;
     private final UserRepository userRepository;
-    private final ScheduleRepository scheduleRepository;
 
-    public WorkInfo joinStore(CodeDto codeDto, Long userId){
+    public WorkInfo joinStore(Long storeId, Long userId){
+        WorkInfo work = workInfoRepository.findByUserIdAndStoreId(userId, storeId);
+        work.setActivated(true);
+        return workInfoRepository.save(work);
+    }
+
+    public void signUpStore(CodeDto codeDto, Long userId){
         String codeName = codeDto.getCode();
         Store store = storeRepository.findByCode(codeName);
 
         if(codeName.equals(store.getCode())){
             WorkInfo workInfo = new WorkInfo(userId, store.getStoreId(), 0, null);
             workInfoRepository.save(workInfo);
-            return workInfo;
         }
         else {
             System.out.println("store 초대코드와 일치하지 않습니다");
-            return null;
         }
     }
 
     public List<WorkInfo> getWorker(Long storeId) {
-        List<WorkInfo> works = workInfoRepository.findByStoreId(storeId);
+        List<WorkInfo> works = workInfoRepository.findByStoreIdAndActivated(storeId, true);
         return works;
     }
 
@@ -49,17 +51,17 @@ public class WorkInfoService{
         return workInfoRepository.findByUserIdAndStoreId(userId, storeId);
     }
 
-    public WorkInfo getWorkerById(Long userId){
-        return workInfoRepository.findByUserId(userId);
+    public List<WorkInfo> getWorkerById(Long userId){
+        return workInfoRepository.findByUserIdAndActivated(userId, true);
     }
 
-    public List<Schedule> getWorkSchedule(Long storeId, String day){
+    public List<Schedule> getWorkSchedule(Long storeId, String day) {
         List<WorkInfo> work;
         List<Schedule> schedule = new ArrayList<>();
-        switch(day) {
+        switch (day) {
             case "mon":
                 work = workInfoRepository.findByStoreIdAndMonStartIsNotNull(storeId);
-                if(work.isEmpty()) return null;
+                if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
                     s.setStart(workInfo.getMonStart());
@@ -70,7 +72,7 @@ public class WorkInfoService{
                 return schedule;
             case "tue":
                 work = workInfoRepository.findByStoreIdAndTueStartIsNotNull(storeId);
-                if(work.isEmpty()) return null;
+                if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
                     s.setStart(workInfo.getTueStart());
@@ -81,7 +83,7 @@ public class WorkInfoService{
                 return schedule;
             case "wed":
                 work = workInfoRepository.findByStoreIdAndWedStartIsNotNull(storeId);
-                if(work.isEmpty()) return null;
+                if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
                     s.setStart(workInfo.getWedStart());
@@ -92,7 +94,7 @@ public class WorkInfoService{
                 return schedule;
             case "thu":
                 work = workInfoRepository.findByStoreIdAndThuStartIsNotNull(storeId);
-                if(work.isEmpty()) return null;
+                if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
                     s.setStart(workInfo.getThuStart());
@@ -103,7 +105,7 @@ public class WorkInfoService{
                 return schedule;
             case "fri":
                 work = workInfoRepository.findByStoreIdAndFriStartIsNotNull(storeId);
-                if(work.isEmpty()) return null;
+                if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
                     s.setStart(workInfo.getFriStart());
@@ -114,7 +116,7 @@ public class WorkInfoService{
                 return schedule;
             case "sat":
                 work = workInfoRepository.findByStoreIdAndSatStartIsNotNull(storeId);
-                if(work.isEmpty()) return null;
+                if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
                     s.setStart(workInfo.getSatStart());
@@ -125,7 +127,7 @@ public class WorkInfoService{
                 return schedule;
             case "sun":
                 work = workInfoRepository.findByStoreIdAndSunStartIsNotNull(storeId);
-                if(work.isEmpty()) return null;
+                if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
                     s.setStart(workInfo.getSunStart());
@@ -137,12 +139,6 @@ public class WorkInfoService{
             default:
                 return null;
         }
-
-//        List<ScheduleDto> schedule = new ArrayList<ScheduleDto>();
-//        ScheduleDto s;
-//        for(int i= 0 ; i < work.size(); i++){
-//            s.setStart(work.get(i).);
-//        }
     }
 
     public WorkInfo updateWorker(Long storeId, Long userId, InfoDto infoDto){

@@ -14,6 +14,7 @@ public class WorkInfoDto {
     private Long storeId;
     private int wage;
     private String account;
+    private boolean activated;
 
     private String monStart, monEnd;
     private String tueStart, tueEnd;

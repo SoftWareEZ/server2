@@ -40,6 +40,13 @@ public class StoreController {
     public String sendCode(@PathVariable Long storeId){
         return storeService.getCode(storeId);
     }
+    
+    //입사 요청 받기
+    @PostMapping("/store/{storeId}/join/{userId}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public WorkInfo joinStore(@PathVariable Long storeId, @PathVariable Long userId){
+        return workInfoService.joinStore(storeId, userId);
+    }
 
     //입사한 알바생 조회
     @GetMapping("/store/{storeId}/worker/list")

@@ -27,6 +27,8 @@ public class WorkInfo{
     private int wage;
     @Column
     private String account;
+    @Column
+    private boolean activated;
 
     @Column
     private String monStart, monEnd;
@@ -49,42 +51,12 @@ public class WorkInfo{
     @Column
     private String sunStart, sunEnd;
 
-//    public WorkInfo(Long userId, Long storeId, int wage, String account,
-//                    String monStart, String mon_end, String tue_start, String tue_end, String wed_start, String wed_end,
-//                    String thu_start, String thu_end, String fri_start, String fri_end, String sat_start, String sat_end,
-//                    String sun_start, String sun_end){
-//        this.userId = userId;
-//        this.storeId = storeId;
-//        this.wage = wage;
-//        this.account = account;
-//
-//        this.monStart = monStart;
-//        this.mon_end = mon_end;
-//
-//        this.tue_start = tue_start;
-//        this.tue_end = tue_end;
-//
-//        this.wed_start = wed_start;
-//        this.wed_end = wed_end;
-//
-//        this.thu_start = thu_start;
-//        this.thu_end = thu_end;
-//
-//        this.fri_start = fri_start;
-//        this.fri_end = fri_end;
-//
-//        this.sat_start = sat_start;
-//        this.sat_end = sat_end;
-//
-//        this.sun_start = sun_start;
-//        this.sun_end = sun_end;
-//    }
-
     public WorkInfo(Long userId, Long storeId, int wage, String account){
         this.userId = userId;
         this.storeId = storeId;
         this.wage = wage;
         this.account = account;
+        this.activated = false;
 
         this.monStart = null;
         this.monEnd = null;

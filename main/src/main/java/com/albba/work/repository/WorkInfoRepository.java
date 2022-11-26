@@ -11,6 +11,8 @@ public interface WorkInfoRepository extends JpaRepository<WorkInfo, Long> {
     List<WorkInfo> findByStoreId(Long storeId);
 
     WorkInfo findByUserIdAndStoreId(Long userId, Long StoreId);
+    List<WorkInfo> findByUserIdAndActivated(Long userId, boolean activated);
+    List<WorkInfo> findByStoreIdAndActivated(Long storeId, boolean activated);
 
     List<WorkInfo> findByStoreIdAndMonStartIsNotNull(Long storeId);
     List<WorkInfo> findByStoreIdAndTueStartIsNotNull(Long storeId);

@@ -1,7 +1,6 @@
 package com.albba.work.controller;
 
 import com.albba.work.dto.CodeDto;
-import com.albba.work.dto.ScheduleDto;
 import com.albba.work.model.Schedule;
 import com.albba.work.model.Store;
 import com.albba.work.model.WorkInfo;
@@ -11,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,20 +21,25 @@ public class WorkInfoController {
     private final WorkInfoService workInfoService;
     private final StoreService storeService;
     
-    //알바생이 초대 코드를 눌렀을 때 입사 요청 받아줌
-    @PostMapping("/worker/join/{userId}")
+    //알바생이 초대 코드를 눌렀을 때 입사 요청 전송
+    @PostMapping("worker/signup/{userId}")
     @PreAuthorize("hasAnyRole('USER')")
-    public WorkInfo joinStore(@RequestBody CodeDto codeDto, @PathVariable Long userId){
-        return workInfoService.joinStore(codeDto, userId);
+    public void signUpStore(@RequestBody CodeDto codeDto, @PathVariable Long userId){
+        workInfoService.signUpStore(codeDto, userId);
     }
 
     //알바생 워크 플레이스 조회
     @GetMapping("/worker/{userId}")
     @PreAuthorize("hasAnyRole('USER')")
-    public String getWorkerById(@PathVariable Long userId){
-        WorkInfo work = workInfoService.getWorkerById(userId);
-        Store store = storeService.getStoreById(work.getStoreId());
-        return store.getStoreName();
+    public List<Store> getWorkerById(@PathVariable Long userId){
+        List<WorkInfo> work = workInfoService.getWorkerById(userId);
+
+        List<Store> store = new ArrayList<>();
+        for(WorkInfo workInfo : work){
+            Store s = storeService.getStoreById(workInfo.getStoreId());
+            store.add(s);
+        }
+        return store;
     }
 
     //한달 근무표
