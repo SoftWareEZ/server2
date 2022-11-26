@@ -55,19 +55,4 @@ public class Commute {
         this.day = startdto.getDay();
         this.start = startdto.getStart();
     }
-    public Commute(EndDto endDto){
-        this.userId = endDto.getUserId();
-        this.storeId = endDto.getStoreId();
-        this.year = endDto.getYear();
-        this.month = endDto.getMonth();
-        this.day = endDto.getDay();
-        this.end = endDto.getEnd();
-    }
-
-    public Commute(MonthDto monthDto) {
-        this.userId = monthDto.getUserId();
-        this.storeId = monthDto.getStoreId();
-        this.month = monthDto.getMonth();
-        this.time = monthDto.getTime();
-    }
 }

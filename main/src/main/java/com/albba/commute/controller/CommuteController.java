@@ -17,6 +17,7 @@ import java.util.List;
 public class CommuteController {
     private final CommuteService commuteService;
 
+    // 출근
     @PostMapping(path ="/start") // http://localhost/albba/commute/start
     public String Start(@RequestBody StartDto startdto) {
         int flag = commuteService.insert(startdto);
@@ -30,6 +31,7 @@ public class CommuteController {
         }
     }
 
+    // 퇴근
     @PostMapping(path ="/end") // http://localhost/albba/commute/end
     public String End(@RequestBody EndDto endDto) {
         int flag = commuteService.update(endDto);
@@ -40,11 +42,13 @@ public class CommuteController {
         }
     }
 
+    // 출근 기록(내가 일하는 모든 store 포함)
     @PostMapping(path ="/list") // http://localhost/albba/commute/list
     public List<Commute> List(@RequestBody ListDto listDto) {
         return commuteService.List(listDto);
     }
 
+    // 월별 출근 기록(store마다 다름)
     @PostMapping(path = "/month/{userId}")
     public int Month(@PathVariable Long userId, @RequestBody MonthDto monthDto) {return commuteService.Month(userId, monthDto);}
 }
