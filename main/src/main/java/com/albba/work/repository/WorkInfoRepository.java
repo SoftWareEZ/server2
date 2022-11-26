@@ -1,6 +1,7 @@
 package com.albba.work.repository;
 
 import com.albba.work.model.WorkInfo;
+import org.hibernate.jdbc.Work;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -9,6 +10,8 @@ public interface WorkInfoRepository extends JpaRepository<WorkInfo, Long> {
     WorkInfo findByUserId(Long userId);
 
     List<WorkInfo> findByStoreId(Long storeId);
+
+    WorkInfo findByUserIdAndStoreId(Long userId, Long StoreId);
 
     List<WorkInfo> findByStoreIdAndMonStartIsNotNull(Long storeId);
     List<WorkInfo> findByStoreIdAndTueStartIsNotNull(Long storeId);

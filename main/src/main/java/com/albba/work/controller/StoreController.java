@@ -48,17 +48,18 @@ public class StoreController {
         return workInfoService.getWorker(storeId);
     }
 
-    //어차피 특정 알바생 클릭해서 조회하고 바꾸는거니까 storeId는 필요없다 생각해서 url에 뺌
     //입사한 특정 알바생 조회
-    @GetMapping("/store/worker/list/{userId}")
+    @GetMapping("/store/{storeId}/worker/list/{userId}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public WorkInfo getWorkerById(@PathVariable Long userId){
-        return workInfoService.getWorkerById(userId);
+    public WorkInfo getWorkerById(@PathVariable Long storeId, @PathVariable Long userId){
+        return workInfoService.getWorkerById(storeId, userId);
     }
     
     //알바생 알바정보 update
-    @PostMapping("store/worker/setting/{userId}")
+    @PostMapping("store/{storeId}/worker/setting/{userId}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public WorkInfo updateWorkInfo(@PathVariable Long userId, @RequestBody InfoDto infoDto) {return workInfoService.updateWorker(userId, infoDto);}
+    public WorkInfo updateWorkInfo(@PathVariable Long storeId, @PathVariable Long userId, @RequestBody InfoDto infoDto) {
+        return workInfoService.updateWorker(storeId, userId, infoDto);
+    }
 
 }

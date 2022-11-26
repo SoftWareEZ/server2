@@ -45,8 +45,8 @@ public class WorkInfoService{
         return works;
     }
 
-    public WorkInfo getWorkerById(Long userId){
-        return workInfoRepository.findByUserId(userId);
+    public WorkInfo getWorkerById(Long storeId, Long userId){
+        return workInfoRepository.findByUserIdAndStoreId(userId, storeId);
     }
 
     public List<Schedule> getWorkSchedule(Long storeId, String day){
@@ -141,8 +141,8 @@ public class WorkInfoService{
 //        }
     }
 
-    public WorkInfo updateWorker(Long userId, InfoDto infoDto){
-        WorkInfo work = workInfoRepository.findByUserId(userId);
+    public WorkInfo updateWorker(Long storeId, Long userId, InfoDto infoDto){
+        WorkInfo work = workInfoRepository.findByUserIdAndStoreId(userId, storeId);
         work.setWage(infoDto.getWage());
         work.setAccount(infoDto.getAccount());
 
