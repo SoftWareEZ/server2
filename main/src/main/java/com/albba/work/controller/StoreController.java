@@ -52,7 +52,7 @@ public class StoreController {
     @GetMapping("/store/{storeId}/worker/list/{userId}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public WorkInfo getWorkerById(@PathVariable Long storeId, @PathVariable Long userId){
-        return workInfoService.getWorkerById(storeId, userId);
+        return workInfoService.getWorkerByUserIdAndStoreId(storeId, userId);
     }
     
     //알바생 알바정보 update

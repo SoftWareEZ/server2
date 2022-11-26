@@ -45,8 +45,12 @@ public class WorkInfoService{
         return works;
     }
 
-    public WorkInfo getWorkerById(Long storeId, Long userId){
+    public WorkInfo getWorkerByUserIdAndStoreId(Long storeId, Long userId){
         return workInfoRepository.findByUserIdAndStoreId(userId, storeId);
+    }
+
+    public WorkInfo getWorkerById(Long userId){
+        return workInfoRepository.findByUserId(userId);
     }
 
     public List<Schedule> getWorkSchedule(Long storeId, String day){
