@@ -1,15 +1,13 @@
 package com.albba.commute.dto;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
-public class StartDto {
+public class MonthDto {
     private Long userId;
 
     private Long storeId;
@@ -20,9 +18,5 @@ public class StartDto {
     @JsonFormat(pattern = "MM")
     private String month;
 
-    @JsonFormat(pattern = "dd")
-    private String day;
-
-    @JsonFormat(pattern = "HH:mm")
-    private  String start;
+    private double time; // 기준은 분
 }

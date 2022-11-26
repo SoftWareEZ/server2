@@ -128,7 +128,7 @@ public class KakaoUserService {
     private User registerKakaoUserIfNeeded(KakaoUserInfoDto kakaoUserInfo) {
         // DB 에 중복된 Kakao Id 가 있는지 확인
         Long kakaoId = kakaoUserInfo.getId();
-        User kakaoUser = userRepository.findByKakaoId(kakaoId)
+        User kakaoUser = userRepository.findByKakaoId(kakaoId.toString())
                 .orElse(null);
         if (kakaoUser == null) {
             // 회원가입
@@ -145,7 +145,7 @@ public class KakaoUserService {
             Authority authority = new Authority();
             authority.setAuthorityName("ROLE_USER");
 
-            User user = new User(kakaoId.toString(), encodedPassword, email, nickname,phone_number,kakaoId);
+            User user = new User(kakaoId.toString(), encodedPassword, email, nickname,phone_number,kakaoId.toString());
             user.setAuthorities(Collections.singleton(authority));
             userRepository.save(user);
             return user;
