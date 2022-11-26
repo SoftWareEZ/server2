@@ -7,6 +7,7 @@ import com.albba.commute.dto.StartDto;
 import com.albba.commute.model.Commute;
 import com.albba.commute.repository.CommuteRepository;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class CommuteService {
         try{
             Commute commute = commuteRepository.findCommuteByUserIdAndStoreIdAndYearAndMonthAndDay(endDto.getUserId(), endDto.getStoreId(), endDto.getYear(), endDto.getMonth(), endDto.getDay()).orElseThrow(() -> new NullPointerException("출근 정보가 존재하지 않습니다."));
             commute.setEnd(endDto.getEnd());
+            commute.setTime(commuteRepository.maketime(commute.getStart(), endDto.getEnd()));
             commuteRepository.save(commute);
             return 1;
         } catch(Exception e){

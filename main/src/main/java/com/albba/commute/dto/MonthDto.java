@@ -15,5 +15,5 @@ public class MonthDto {
     @JsonFormat(pattern = "MM")
     private String month;
 
-    private double time;
+    private double time; // 기준은 분
 }

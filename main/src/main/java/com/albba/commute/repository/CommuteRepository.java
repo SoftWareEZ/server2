@@ -16,6 +16,16 @@ public interface CommuteRepository  extends JpaRepository<Commute, Long> {
     List<Commute> findCommuteByStoreIdAndMonthAndUserId(@Param("storeId")Long storeId, @Param("month")String month, @Param("userId")Long userId);
 
     default double maketime(String start, String end){
-        return Double.parseDouble(end) - Double.parseDouble(start);
+        double hour = Double.parseDouble(end.split(":")[0]) - Double.parseDouble(start.split(":")[0]);
+        double endmin =  Double.parseDouble(end.split(":")[1]);
+        double startmin = Double.parseDouble(start.split(":")[1]);
+        double totalmin;
+        if(endmin < startmin){
+            hour -= hour;
+            totalmin = 60 - startmin + endmin;
+        } else{
+            totalmin = endmin - startmin;
+        }
+        return hour * 60 + totalmin;
     }
 }
