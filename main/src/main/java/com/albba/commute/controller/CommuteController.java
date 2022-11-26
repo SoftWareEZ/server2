@@ -43,9 +43,9 @@ public class CommuteController {
     }
 
     // 출근 기록(내가 일하는 모든 store 포함)
-    @PostMapping(path ="/list") // http://localhost/albba/commute/list
-    public List<Commute> List(@RequestBody ListDto listDto) {
-        return commuteService.List(listDto);
+    @PostMapping(path ="/list/{userId}/{year}/{month}") // http://localhost/albba/commute/list
+    public List<String> List(@PathVariable Long userId, @PathVariable String year, @PathVariable String month) {
+        return commuteService.List(userId, year, month);
     }
 
     // 월별 출근 기록(store마다 다름)

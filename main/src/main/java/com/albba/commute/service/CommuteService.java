@@ -6,12 +6,16 @@ import com.albba.commute.dto.MonthDto;
 import com.albba.commute.dto.StartDto;
 import com.albba.commute.model.Commute;
 import com.albba.commute.repository.CommuteRepository;
+import com.albba.work.model.Store;
 import com.albba.work.model.WorkInfo;
+import com.albba.work.repository.StoreRepository;
 import com.albba.work.repository.WorkInfoRepository;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.stereotype.Service;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -19,6 +23,8 @@ import java.util.List;
 public class CommuteService {
     private final CommuteRepository commuteRepository;
     private final WorkInfoRepository workInfoRepository;
+
+    private final StoreRepository storeRepository;
     public int insert(StartDto startdto){
         try{
             if(commuteRepository.findCommuteByUserIdAndStoreIdAndYearAndMonthAndDay(startdto.getUserId(), startdto.getStoreId(), startdto.getYear(), startdto.getMonth(), startdto.getDay()).isPresent()){
@@ -45,8 +51,14 @@ public class CommuteService {
 
     }
 
-    public List<Commute> List(ListDto listdto){
-        return commuteRepository.findCommuteByUserId(listdto.getUserId());
+    public List<String> List(Long userId, String year, String month){
+        List<Commute> commute = commuteRepository.findCommuteByUserIdAndYearAndMonth(userId, year, month);
+        List<String> list = new ArrayList<>();
+        for (Commute value : commute) {
+            String store = storeRepository.findByStoreId(value.getStoreId()).getStoreName();
+            list.add(value.getDay() + "일 "+ store + " " + value.getStart() + "-" + value.getEnd());
+        }
+        return list;
     }
 
     public int Month(Long userId, MonthDto monthDto){

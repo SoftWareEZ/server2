@@ -12,6 +12,8 @@ public interface CommuteRepository  extends JpaRepository<Commute, Long> {
     Optional<Commute> findCommuteByUserIdAndStoreIdAndYearAndMonthAndDay(Long userId, Long storeId, String year, String month, String day);
     List<Commute> findCommuteByUserId(Long userId);
 
+    List<Commute> findCommuteByUserIdAndYearAndMonth(Long UserId, String year, String month);
+
     List<Commute> findCommuteByUserIdAndStoreIdAndYearAndMonth(Long userId, Long storeId, String year, String Month);
     default double maketime(String start, String end){
         double hour = Double.parseDouble(end.split(":")[0]) - Double.parseDouble(start.split(":")[0]);
