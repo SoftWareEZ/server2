@@ -34,5 +34,6 @@ insert into work_info(user_id, store_id, wage, account, mon_start, mon_end, tue_
 
 insert into commute (user_id, store_id, year, month, day, start, end, time) values ('1', '1', '2022', '12', '11', '11:00', '12:00', 60);
 insert into commute (user_id, store_id, year, month, day, start, end, time) values ('1', '1', '2022', '12', '12', '11:00', '12:00', 60);
-insert into commute (user_id, store_id, year, month, day, start, end, time) values ('2', '1', '2022','12','11', '13:00', '14:00', 60);
+insert into commute (user_id, store_id, year, month, day, start, end, time) values ('1', '2', '2022', '12', '13', '11:00', '12:00', 60);
+insert into commute (user_id, store_id, year, month, day, start, end, time) values ('4', '2', '2022','12','11', '13:00', '14:00', 130);
 

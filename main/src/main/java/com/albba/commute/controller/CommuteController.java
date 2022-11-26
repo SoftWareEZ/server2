@@ -50,5 +50,17 @@ public class CommuteController {
 
     // 월별 출근 기록(store마다 다름)
     @PostMapping(path = "/month/{userId}")
-    public int Month(@PathVariable Long userId, @RequestBody MonthDto monthDto) {return commuteService.Month(userId, monthDto);}
+    public int Month(@PathVariable Long userId, @RequestBody MonthDto monthDto) {
+        if(commuteService.Month(userId, monthDto) == -1){
+            return 0;
+        } else {return commuteService.Month(userId, monthDto);}
+    }
+
+    // 한달 월급 계산(30분 단위로 월급 계산)
+    @PostMapping(path = "/cost/{userId}")
+    public int Cost(@PathVariable Long userId, @RequestBody MonthDto monthDto) {
+        if(commuteService.Cost(userId, monthDto) == -1){
+            return 0;
+        } else {return commuteService.Cost(userId, monthDto);}
+    }
 }

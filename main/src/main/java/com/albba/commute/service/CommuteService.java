@@ -6,6 +6,8 @@ import com.albba.commute.dto.MonthDto;
 import com.albba.commute.dto.StartDto;
 import com.albba.commute.model.Commute;
 import com.albba.commute.repository.CommuteRepository;
+import com.albba.work.model.WorkInfo;
+import com.albba.work.repository.WorkInfoRepository;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.util.List;
 @Service
 public class CommuteService {
     private final CommuteRepository commuteRepository;
+    private final WorkInfoRepository workInfoRepository;
     public int insert(StartDto startdto){
         try{
             if(commuteRepository.findCommuteByUserIdAndStoreIdAndYearAndMonthAndDay(startdto.getUserId(), startdto.getStoreId(), startdto.getYear(), startdto.getMonth(), startdto.getDay()).isPresent()){
@@ -48,10 +51,28 @@ public class CommuteService {
 
     public int Month(Long userId, MonthDto monthDto){
         int min = 0;
-       List<Commute> commute = commuteRepository.findCommuteByUserIdAndStoreIdAndYearAndMonth(userId, monthDto.getStoreId(), monthDto.getYear(), monthDto.getMonth());
-       for(int i = 0; i < commute.size(); i++){
-           min += commute.get(i).getTime();
-       }
-       return min;
+        try {
+            List<Commute> commute = commuteRepository.findCommuteByUserIdAndStoreIdAndYearAndMonth(userId, monthDto.getStoreId(), monthDto.getYear(), monthDto.getMonth());
+            for (Commute value : commute) {
+                min += value.getTime();
+            }
+            return min;
+        } catch (Exception e){
+            return -1;
+        }
+    }
+
+    public int Cost(Long userId, MonthDto monthDto) {
+        int min = 0;
+        try {
+            WorkInfo workInfo = workInfoRepository.findByUserIdAndStoreId(userId, monthDto.getStoreId());
+            List<Commute> commute = commuteRepository.findCommuteByUserIdAndStoreIdAndYearAndMonth(userId, monthDto.getStoreId(), monthDto.getYear(), monthDto.getMonth());
+            for (Commute value : commute) {
+                min += value.getTime();
+            }
+            return (min / 30) * (workInfo.getWage() / 2);
+        } catch (Exception e){
+            return -1;
+        }
     }
 }
