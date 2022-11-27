@@ -59,7 +59,7 @@ public class UserService {
                // authority.setAuthorityName("ROLE_ADMIN");
             User user = new User(requestDto.getUsername(), encodedPassword, email, requestDto.getRealname(),phone_number,requestDto.getUsername());
             user.setAuthorities(Collections.singleton(authority));
-            user.setAuthorities(new Authority("ROLE_ADMIN"));
+            //user.setAuthorities(new Authority("ROLE_ADMIN"));
             userRepository.save(user);
             return user;
         }
