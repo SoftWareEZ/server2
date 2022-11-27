@@ -42,7 +42,7 @@ public class StoreController {
     }
     
     //입사 요청 받기
-    @PostMapping("/store/{storeId}/join/{userId}")
+    @GetMapping("/store/{storeId}/join/{userId}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public WorkInfo joinStore(@PathVariable Long storeId, @PathVariable Long userId){
         return workInfoService.joinStore(storeId, userId);

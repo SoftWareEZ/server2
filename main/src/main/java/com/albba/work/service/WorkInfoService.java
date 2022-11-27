@@ -60,7 +60,7 @@ public class WorkInfoService{
         List<Schedule> schedule = new ArrayList<>();
         switch (day) {
             case "mon":
-                work = workInfoRepository.findByStoreIdAndMonStartIsNotNull(storeId);
+                work = workInfoRepository.findByStoreIdAndMonStartNot(storeId, "null");
                 if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
@@ -71,7 +71,7 @@ public class WorkInfoService{
                 }
                 return schedule;
             case "tue":
-                work = workInfoRepository.findByStoreIdAndTueStartIsNotNull(storeId);
+                work = workInfoRepository.findByStoreIdAndTueStartIsNot(storeId, "null");
                 if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
@@ -82,7 +82,7 @@ public class WorkInfoService{
                 }
                 return schedule;
             case "wed":
-                work = workInfoRepository.findByStoreIdAndWedStartIsNotNull(storeId);
+                work = workInfoRepository.findByStoreIdAndWedStartIsNot(storeId, "null");
                 if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
@@ -93,7 +93,7 @@ public class WorkInfoService{
                 }
                 return schedule;
             case "thu":
-                work = workInfoRepository.findByStoreIdAndThuStartIsNotNull(storeId);
+                work = workInfoRepository.findByStoreIdAndThuStartIsNot(storeId, "null");
                 if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
@@ -104,7 +104,7 @@ public class WorkInfoService{
                 }
                 return schedule;
             case "fri":
-                work = workInfoRepository.findByStoreIdAndFriStartIsNotNull(storeId);
+                work = workInfoRepository.findByStoreIdAndFriStartIsNot(storeId, "null");
                 if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
@@ -115,7 +115,7 @@ public class WorkInfoService{
                 }
                 return schedule;
             case "sat":
-                work = workInfoRepository.findByStoreIdAndSatStartIsNotNull(storeId);
+                work = workInfoRepository.findByStoreIdAndSatStartIsNot(storeId, "null");
                 if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
@@ -126,7 +126,7 @@ public class WorkInfoService{
                 }
                 return schedule;
             case "sun":
-                work = workInfoRepository.findByStoreIdAndSunStartIsNotNull(storeId);
+                work = workInfoRepository.findByStoreIdAndSunStartIsNot(storeId, "null");
                 if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
