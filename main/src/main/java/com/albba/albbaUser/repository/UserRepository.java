@@ -14,4 +14,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findOneWithAuthoritiesByUsername(String username);
 
     Optional<User> findByKakaoId(String kakaoId);
+
+    //로그인때 회원권한 확인
+
 }

@@ -5,10 +5,7 @@ import com.albba.albbaUser.entity.User;
 import lombok.*;
 
 import javax.persistence.Column;
-
-
-
-
+import java.util.List;
 
 
 //프론트로 유저정보랑 store보내줄 때 쓰는 dto
@@ -22,7 +19,6 @@ public class UserInfoFrontDto {
     private Long storeId;
 
     private String username;
-
 
 
     private String email;
@@ -40,6 +36,7 @@ public class UserInfoFrontDto {
         this.phone_number = user.getPhone_number();
         this.storeId = sid;
     }
+
 
 
 }

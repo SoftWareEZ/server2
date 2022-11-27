@@ -19,10 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 
@@ -45,6 +42,8 @@ public class UserService {
         String username = requestDto.getUsername();
         Optional<User> found = userRepository.findByUsername(username);
 
+
+
         if (!found.isPresent()) {
             String password = UUID.randomUUID().toString();
             String encodedPassword = passwordEncoder.encode(password);
@@ -54,10 +53,13 @@ public class UserService {
 
 
             Authority authority = new Authority();
+            //if(requestDto.isAdmin())
             authority.setAuthorityName("ROLE_USER");
-
+            //else
+               // authority.setAuthorityName("ROLE_ADMIN");
             User user = new User(requestDto.getUsername(), encodedPassword, email, requestDto.getRealname(),phone_number,requestDto.getUsername());
             user.setAuthorities(Collections.singleton(authority));
+            user.setAuthorities(new Authority("ROLE_ADMIN"));
             userRepository.save(user);
             return user;
         }
@@ -109,11 +111,21 @@ public class UserService {
             //userID에 해당하는 storeID가 있는 지 알아보고 있으면 그 store 반환
             //한 사용자가 사업장 여러 개 할거면 여기서 List<Store> 로 가져오기
             Long storeid = (long)1;
-            Optional<Store> storechk = storeRepository.findByUserId(usertemp.getUserId());
-            if(storechk.isPresent())
+            //<Store> storechk = storeRepository.findByUserId(usertemp.getUserId());
+            List<Store> storeschk = storeRepository.findStoresByUserId(usertemp.getUserId());
+
+
+            if(storeschk.size()==0) {
+                storeid = null;
+            }
+            else {
+                storeid = storeschk.get(0).getStoreId();
+            }
+             /*   if(storechk.isPresent())
                 storeid= storechk.get().getStoreId();
             else
                 storeid = null;
+            return new UserInfoFrontDto(usertemp,storeid);*/
             return new UserInfoFrontDto(usertemp,storeid);
         }
         else
@@ -169,7 +181,15 @@ public class UserService {
         String phone_number = requestDto.getPhone_number();
 
         Authority authority = new Authority();
+
+
+
+        //if(requestDto.isAdmin())
         authority.setAuthorityName("ROLE_USER");
+        //else
+        // authority.setAuthorityName("ROLE_ADMIN");
+
+
 
         User user = new User(username, password, email, realname,phone_number);
         user.setAuthorities(Collections.singleton(authority));
