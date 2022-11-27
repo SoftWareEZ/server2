@@ -10,8 +10,6 @@ insert into user (username, password, email,realname,phone_number) values ('hang
 insert into user (username, password, email,realname,phone_number) values ('park', '$2a$10$sg2gYiGFTPvqoebJkC/f4erLz.Q8x3ljfAr0P.jeRzhW3uyov56iu', 'duck99@gmail.com','박영덕','010-0000-0000');
 insert into user (username, password, email,realname,phone_number) values ('jong', '$2a$10$sg2gYiGFTPvqoebJkC/f4erLz.Q8x3ljfAr0P.jeRzhW3uyov56iu', 'jonghee@daum.net','윤종희','010-0000-0000');
 insert into user (username, password, email,realname,phone_number) values ('kkwack', '$2a$10$sg2gYiGFTPvqoebJkC/f4erLz.Q8x3ljfAr0P.jeRzhW3uyov56iu', 'kkwack@hanmail.net','꽉종욱','010-0000-0000');
-insert into user (username, password, email,realname,phone_number) values ('seo', '$2a$10$sg2gYiGFTPvqoebJkC/f4erLz.Q8x3ljfAr0P.jeRzhW3uyov56iu', 'seoys@daum.net','서영석','010-8412-1235');
-insert into user (username, password, email,realname,phone_number) values ('optimus', '$2a$10$sg2gYiGFTPvqoebJkC/f4erLz.Q8x3ljfAr0P.jeRzhW3uyov56iu', 'yeahyeah@daum.net','문예주','010-0000-0000');
 
 
 
@@ -32,6 +30,16 @@ insert into user_authority (user_id, authority_name) values (6, 'ROLE_USER');
 insert into user_authority (user_id, authority_name) values (6, 'ROLE_ADMIN');
 insert into user_authority (user_id, authority_name) values (7, 'ROLE_USER');
 insert into user_authority (user_id, authority_name) values (7, 'ROLE_ADMIN');
+insert into user_authority (user_id, authority_name) values (8, 'ROLE_USER');
+insert into user_authority (user_id, authority_name) values (8, 'ROLE_ADMIN');
+insert into user_authority (user_id, authority_name) values (9, 'ROLE_USER');
+insert into user_authority (user_id, authority_name) values (9, 'ROLE_ADMIN');
+insert into user_authority (user_id, authority_name) values (10, 'ROLE_USER');
+insert into user_authority (user_id, authority_name) values (10, 'ROLE_ADMIN');
+insert into user_authority (user_id, authority_name) values (11, 'ROLE_USER');
+insert into user_authority (user_id, authority_name) values (11, 'ROLE_ADMIN');
+insert into user_authority (user_id, authority_name) values (12, 'ROLE_USER');
+insert into user_authority (user_id, authority_name) values (12, 'ROLE_ADMIN');
 
 
 insert into store (user_id, code, store_name, store_addr) values (1, 75124324, '맘스터치 영대점', '경북 경산시 대동');

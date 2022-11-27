@@ -13,9 +13,8 @@ import javax.persistence.*;
 @Entity
 public class Schedule {
     @Id
-    @Column(name = "no")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer no;
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column
     String name;

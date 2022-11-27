@@ -11,6 +11,7 @@ import com.albba.work.service.StoreService;
 import com.albba.work.service.WorkInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
@@ -52,11 +53,25 @@ public class StoreController {
         return workInfoService.joinStore(storeId, userId);
     }
 
+    //입사 요청 거절
+    @GetMapping("/store/{storeId}/rejectJoin/{userId}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public String rejectJoin(@PathVariable Long storeId, @PathVariable Long userId) {
+        return workInfoService.rejectJoin(storeId, userId);
+    }
+
     //퇴사 요청 받기
     @GetMapping("/store/{storeId}/leave/{userId}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public String leaveCheck(@PathVariable Long storeId, @PathVariable Long userId){
         return workInfoService.leaveCheck(userId, storeId);
+    }
+
+    //퇴사 요청 거절
+    @GetMapping("/store/{storeId}/rejectLeave/{userId}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public String rejectLeave(@PathVariable Long storeId, @PathVariable Long userId) {
+        return workInfoService.rejectLeave(storeId, userId);
     }
 
     //입퇴사 대기 조회 화면

@@ -76,6 +76,27 @@ public class WorkInfoService{
         }
     }
 
+    public String rejectJoin(Long storeId, Long userId){
+        WorkInfo work = workInfoRepository.findByUserIdAndStoreIdAndActivated(userId, storeId, 0);
+
+        if(work == null) return "fail";
+        else{
+            workInfoRepository.delete(work);
+            return "success";
+        }
+    }
+
+    public String rejectLeave(Long storeId, Long userId){
+        WorkInfo work = workInfoRepository.findByUserIdAndStoreIdAndActivated(userId, storeId, 2);
+
+        if(work == null) return "fail";
+        else{
+            work.setActivated(1);
+            workInfoRepository.save(work);
+            return "success";
+        }
+    }
+
     public List<checkInDto> checkIn(Long storeId){
         List<WorkInfo> join = workInfoRepository.findByStoreIdAndActivated(storeId, 0);
         List<WorkInfo> leave = workInfoRepository.findByStoreIdAndActivated(storeId, 2);
@@ -169,6 +190,7 @@ public class WorkInfoService{
                     Schedule s = new Schedule();
                     s.setStart(workInfo.getMonStart());
                     s.setEnd(workInfo.getMonEnd());
+                    s.setUserId(workInfo.getUserId());
                     s.setName((userRepository.getById(workInfo.getUserId()).getRealname()));
                     schedule.add(s);
                 }
@@ -180,6 +202,7 @@ public class WorkInfoService{
                     Schedule s = new Schedule();
                     s.setStart(workInfo.getTueStart());
                     s.setEnd(workInfo.getTueEnd());
+                    s.setUserId(workInfo.getUserId());
                     s.setName((userRepository.getById(workInfo.getUserId()).getRealname()));
                     schedule.add(s);
                 }
@@ -191,6 +214,7 @@ public class WorkInfoService{
                     Schedule s = new Schedule();
                     s.setStart(workInfo.getWedStart());
                     s.setEnd(workInfo.getWedEnd());
+                    s.setUserId(workInfo.getUserId());
                     s.setName((userRepository.getById(workInfo.getUserId()).getRealname()));
                     schedule.add(s);
                 }
@@ -202,6 +226,7 @@ public class WorkInfoService{
                     Schedule s = new Schedule();
                     s.setStart(workInfo.getThuStart());
                     s.setEnd(workInfo.getThuEnd());
+                    s.setUserId(workInfo.getUserId());
                     s.setName((userRepository.getById(workInfo.getUserId()).getRealname()));
                     schedule.add(s);
                 }
@@ -213,6 +238,7 @@ public class WorkInfoService{
                     Schedule s = new Schedule();
                     s.setStart(workInfo.getFriStart());
                     s.setEnd(workInfo.getFriEnd());
+                    s.setUserId(workInfo.getUserId());
                     s.setName((userRepository.getById(workInfo.getUserId()).getRealname()));
                     schedule.add(s);
                 }
@@ -224,6 +250,7 @@ public class WorkInfoService{
                     Schedule s = new Schedule();
                     s.setStart(workInfo.getSatStart());
                     s.setEnd(workInfo.getSatEnd());
+                    s.setUserId(workInfo.getUserId());
                     s.setName((userRepository.getById(workInfo.getUserId()).getRealname()));
                     schedule.add(s);
                 }
@@ -235,6 +262,7 @@ public class WorkInfoService{
                     Schedule s = new Schedule();
                     s.setStart(workInfo.getSunStart());
                     s.setEnd(workInfo.getSunEnd());
+                    s.setUserId(workInfo.getUserId());
                     s.setName((userRepository.getById(workInfo.getUserId()).getRealname()));
                     schedule.add(s);
                 }
