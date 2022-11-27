@@ -55,11 +55,16 @@ public class UserService {
             Authority authority = new Authority();
             //if(requestDto.isAdmin())
             authority.setAuthorityName("ROLE_USER");
+            Set<Authority> authoritySet = new HashSet<Authority>();
+            authoritySet.add(authority);
+            Authority authority2 = new Authority();
+            authority2.setAuthorityName("ROLE_ADMIN");
+            authoritySet.add(authority2);
             //else
                // authority.setAuthorityName("ROLE_ADMIN");
             User user = new User(requestDto.getUsername(), encodedPassword, email, requestDto.getRealname(),phone_number,requestDto.getUsername());
-            user.setAuthorities(Collections.singleton(authority));
-            //user.setAuthorities(new Authority("ROLE_ADMIN"));
+            //user.setAuthorities(Collections.singleton(authority));
+            user.setAuthorities(authoritySet);
             userRepository.save(user);
             return user;
         }
@@ -188,12 +193,16 @@ public class UserService {
         authority.setAuthorityName("ROLE_USER");
         //else
         // authority.setAuthorityName("ROLE_ADMIN");
-
+        Set<Authority> authoritySet = new HashSet<Authority>();
+        authoritySet.add(authority);
+        Authority authority2 = new Authority();
+        authority2.setAuthorityName("ROLE_ADMIN");
+        authoritySet.add(authority2);
 
 
         User user = new User(username, password, email, realname,phone_number);
-        user.setAuthorities(Collections.singleton(authority));
-
+        //user.setAuthorities(Collections.singleton(authority));
+        user.setAuthorities(authoritySet);
         userRepository.save(user);
 
     }
