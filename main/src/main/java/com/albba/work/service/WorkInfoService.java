@@ -32,6 +32,8 @@ public class WorkInfoService{
         String codeName = codeDto.getCode();
         Store store = storeRepository.findByCode(codeName);
 
+        if(store == null) return "fail";
+
         if(codeName.equals(store.getCode())){
             WorkInfo workInfo = new WorkInfo(userId, store.getStoreId(), 0, null);
             workInfoRepository.save(workInfo);
