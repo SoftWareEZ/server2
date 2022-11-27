@@ -21,11 +21,17 @@ insert into authority (authority_name) values ('ROLE_ADMIN');
 insert into user_authority (user_id, authority_name) values (1, 'ROLE_USER');
 insert into user_authority (user_id, authority_name) values (1, 'ROLE_ADMIN');
 insert into user_authority (user_id, authority_name) values (2, 'ROLE_USER');
+insert into user_authority (user_id, authority_name) values (2, 'ROLE_ADMIN');
 insert into user_authority (user_id, authority_name) values (3, 'ROLE_USER');
+insert into user_authority (user_id, authority_name) values (3, 'ROLE_ADMIN');
 insert into user_authority (user_id, authority_name) values (4, 'ROLE_USER');
+insert into user_authority (user_id, authority_name) values (4, 'ROLE_ADMIN');
 insert into user_authority (user_id, authority_name) values (5, 'ROLE_USER');
+insert into user_authority (user_id, authority_name) values (5, 'ROLE_ADMIN');
 insert into user_authority (user_id, authority_name) values (6, 'ROLE_USER');
+insert into user_authority (user_id, authority_name) values (6, 'ROLE_ADMIN');
 insert into user_authority (user_id, authority_name) values (7, 'ROLE_USER');
+insert into user_authority (user_id, authority_name) values (7, 'ROLE_ADMIN');
 
 
 insert into store (user_id, code, store_name, store_addr) values (1, 75124324, '맘스터치 영대점', '경북 경산시 대동');
