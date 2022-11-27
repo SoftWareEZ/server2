@@ -19,4 +19,6 @@ public class MonthDto {
     private String month;
 
     private double time; // 기준은 분
+
+    private String storeName;
 }
