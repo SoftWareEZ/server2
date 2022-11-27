@@ -10,11 +10,13 @@ import java.util.Optional;
 
 public interface CommuteRepository  extends JpaRepository<Commute, Long> {
     Optional<Commute> findCommuteByUserIdAndStoreIdAndYearAndMonthAndDay(Long userId, Long storeId, String year, String month, String day);
-    List<Commute> findCommuteByUserId(Long userId);
 
     List<Commute> findCommuteByUserIdAndYearAndMonth(Long UserId, String year, String month);
 
+    List<Commute> findCommuteByStoreIdAndYearAndMonth(Long storeId, String year, String Month);
     List<Commute> findCommuteByUserIdAndStoreIdAndYearAndMonth(Long userId, Long storeId, String year, String Month);
+
+    List<Commute> findCommuteByUserIdAndYear(Long userId, String year);
     default double maketime(String start, String end){
         double hour = Double.parseDouble(end.split(":")[0]) - Double.parseDouble(start.split(":")[0]);
         double endmin =  Double.parseDouble(end.split(":")[1]);

@@ -14,9 +14,7 @@ import lombok.RequiredArgsConstructor;
 import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.stereotype.Service;
 
-import java.util.AbstractList;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -51,7 +49,18 @@ public class CommuteService {
 
     }
 
-    public List<String> List(Long userId, String year, String month){
+    public List<String> Listyear(Long userId, String year){
+        List<Commute> commute = commuteRepository.findCommuteByUserIdAndYear(userId, year);
+        List<String> list = new ArrayList<>();
+
+        for (Commute value : commute) {
+            list.add(value.getMonth());
+        }
+        Set<String> list1 = new HashSet<>(list);
+        return new ArrayList<>(list1);
+    }
+
+    public List<String> Listmonth(Long userId, String year, String month){
         List<Commute> commute = commuteRepository.findCommuteByUserIdAndYearAndMonth(userId, year, month);
         List<String> list = new ArrayList<>();
         for (Commute value : commute) {
@@ -61,17 +70,30 @@ public class CommuteService {
         return list;
     }
 
-    public int Month(Long userId, MonthDto monthDto){
-        int min = 0;
-        try {
-            List<Commute> commute = commuteRepository.findCommuteByUserIdAndStoreIdAndYearAndMonth(userId, monthDto.getStoreId(), monthDto.getYear(), monthDto.getMonth());
-            for (Commute value : commute) {
-                min += value.getTime();
-            }
-            return min;
-        } catch (Exception e){
-            return -1;
+    public class li{
+        Long userId;
+        int time = 0;
+        li(Long userId){
+            this.userId = userId;
         }
+    }
+
+    public List<Commute> Month(Long storeId, MonthDto monthDto){
+        List<li> list = new ArrayList<>();
+        List<Commute> commute = commuteRepository.findCommuteByStoreIdAndYearAndMonth(storeId, monthDto.getYear(), monthDto.getMonth());
+        for (Commute item : commute) {
+            li l = new li(item.getUserId());
+            list.add(l);
+        }
+
+        for (int i = 0; i < commute.size(); i++) {
+            for (CommuteService.li li : list) {
+                if (li.userId.equals(commute.get(i).getUserId())) {
+                    list.get(i).time += commute.get(i).getTime();
+                }
+            }
+        }
+        return commute;
     }
 
     public int Cost(Long userId, MonthDto monthDto) {

@@ -31,8 +31,10 @@ insert into work_info(user_id, store_id, wage, account, activated, mon_start, mo
 insert into work_info(user_id, store_id, wage, account, activated, mon_start, mon_end, tue_start, tue_end, wed_start, wed_end, thu_start, thu_end, fri_start, fri_end, sat_start, sat_end, sun_start, sun_end) values (6, 1, 10000, '010-5474100-10', true,'null', 'null', '10:00', '16:00', '14:30', '18:00', 'null', 'null', '09:00', '13:00','09:00', '13:00', 'null', 'null');
 insert into work_info(user_id, store_id, wage, account, activated, mon_start, mon_end, tue_start, tue_end, wed_start, wed_end, thu_start, thu_end, fri_start, fri_end, sat_start, sat_end, sun_start, sun_end) values (7, 1, 9500, '21110-20-14445', true,'null', 'null', '10:00', '16:00', '14:30', '18:00', 'null', 'null', '09:00', '13:00','09:00', '13:00', 'null', 'null');
 
+insert into commute (user_id, store_id, year, month, day, start, end, time) values ('1', '1', '2022','10','1', '13:00', '14:00', 60);
+insert into commute (user_id, store_id, year, month, day, start, end, time) values ('1', '1', '2022','11','11', '13:00', '14:00', 60);
 insert into commute (user_id, store_id, year, month, day, start, end, time) values ('1', '1', '2022', '12', '11', '11:00', '12:00', 60);
 insert into commute (user_id, store_id, year, month, day, start, end, time) values ('1', '1', '2022', '12', '12', '11:00', '12:00', 60);
 insert into commute (user_id, store_id, year, month, day, start, end, time) values ('1', '2', '2022', '12', '13', '11:00', '12:00', 60);
-insert into commute (user_id, store_id, year, month, day, start, end, time) values ('4', '2', '2022','12','11', '13:00', '14:00', 130);
+insert into commute (user_id, store_id, year, month, day, start, end, time) values ('4', '2', '2022','12','11', '13:00', '14:00', 60);
 
