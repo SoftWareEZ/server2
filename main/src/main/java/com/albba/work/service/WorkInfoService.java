@@ -6,7 +6,6 @@ import com.albba.work.dto.InfoDto;
 import com.albba.work.model.Schedule;
 import com.albba.work.model.Store;
 import com.albba.work.model.WorkInfo;
-import com.albba.work.repository.ScheduleRepository;
 import com.albba.work.repository.StoreRepository;
 import com.albba.work.repository.WorkInfoRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,16 +28,18 @@ public class WorkInfoService{
         return workInfoRepository.save(work);
     }
 
-    public void signUpStore(CodeDto codeDto, Long userId){
+    public String signUpStore(CodeDto codeDto, Long userId){
         String codeName = codeDto.getCode();
         Store store = storeRepository.findByCode(codeName);
 
         if(codeName.equals(store.getCode())){
             WorkInfo workInfo = new WorkInfo(userId, store.getStoreId(), 0, null);
             workInfoRepository.save(workInfo);
+            return "success";
         }
         else {
             System.out.println("store 초대코드와 일치하지 않습니다");
+            return "fail";
         }
     }
 

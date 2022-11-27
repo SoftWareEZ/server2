@@ -24,8 +24,8 @@ public class WorkInfoController {
     //알바생이 초대 코드를 눌렀을 때 입사 요청 전송
     @PostMapping("worker/signup/{userId}")
     @PreAuthorize("hasAnyRole('USER')")
-    public void signUpStore(@RequestBody CodeDto codeDto, @PathVariable Long userId){
-        workInfoService.signUpStore(codeDto, userId);
+    public String signUpStore(@RequestBody CodeDto codeDto, @PathVariable Long userId){
+        return workInfoService.signUpStore(codeDto, userId);
     }
 
     //알바생 워크 플레이스 조회
