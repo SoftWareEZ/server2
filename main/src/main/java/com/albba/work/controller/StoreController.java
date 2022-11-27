@@ -2,6 +2,7 @@ package com.albba.work.controller;
 
 import com.albba.work.dto.InfoDto;
 import com.albba.work.dto.StoreDto;
+import com.albba.work.dto.checkInDto;
 import com.albba.work.model.Store;
 import com.albba.work.model.WorkInfo;
 import com.albba.work.service.StoreService;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -46,6 +48,20 @@ public class StoreController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     public WorkInfo joinStore(@PathVariable Long storeId, @PathVariable Long userId){
         return workInfoService.joinStore(storeId, userId);
+    }
+
+    //퇴사 요청 받기
+    @GetMapping("/store/{storeId}/leave/{userId}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public String leaveCheck(@PathVariable Long storeId, @PathVariable Long userId){
+        return workInfoService.leaveCheck(userId, storeId);
+    }
+
+    //입퇴사 대기 조회 화면
+    @GetMapping("/store/{storeId}/checkIn")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public List<checkInDto> checkIn(@PathVariable Long storeId){
+        return workInfoService.checkIn(storeId);
     }
 
     //입사한 알바생 조회

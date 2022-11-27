@@ -6,13 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface WorkInfoRepository extends JpaRepository<WorkInfo, Long> {
-    WorkInfo findByUserId(Long userId);
-
-    List<WorkInfo> findByStoreId(Long storeId);
-
     WorkInfo findByUserIdAndStoreId(Long userId, Long StoreId);
-    List<WorkInfo> findByUserIdAndActivated(Long userId, boolean activated);
-    List<WorkInfo> findByStoreIdAndActivated(Long storeId, boolean activated);
+    WorkInfo findByUserIdAndStoreIdAndActivated(Long userId, Long StoreId, int activated);
+    List<WorkInfo> findByUserIdAndActivated(Long userId, int activated);
+    List<WorkInfo> findByStoreIdAndActivated(Long storeId, int activated);
 
     List<WorkInfo> findByStoreIdAndMonStartNot(Long storeId, String check);
     List<WorkInfo> findByStoreIdAndTueStartIsNot(Long storeId, String check);

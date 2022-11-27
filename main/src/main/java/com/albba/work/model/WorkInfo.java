@@ -28,7 +28,7 @@ public class WorkInfo{
     @Column
     private String account;
     @Column
-    private boolean activated;
+    private int activated;
 
     @Column
     private String monStart, monEnd;
@@ -56,7 +56,7 @@ public class WorkInfo{
         this.storeId = storeId;
         this.wage = wage;
         this.account = account;
-        this.activated = false;
+        this.activated = 0;
 
         this.monStart = null;
         this.monEnd = null;

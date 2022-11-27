@@ -25,10 +25,4 @@ public class Schedule {
 
     @Column
     String end;
-
-//    public Schedule(){
-//        this.name = null;
-//        this.start = null;
-//        this.end = null;
-//    }
 }

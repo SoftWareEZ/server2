@@ -3,12 +3,14 @@ package com.albba.work.service;
 import com.albba.albbaUser.repository.UserRepository;
 import com.albba.work.dto.CodeDto;
 import com.albba.work.dto.InfoDto;
+import com.albba.work.dto.checkInDto;
 import com.albba.work.model.Schedule;
 import com.albba.work.model.Store;
 import com.albba.work.model.WorkInfo;
 import com.albba.work.repository.StoreRepository;
 import com.albba.work.repository.WorkInfoRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.jdbc.Work;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class WorkInfoService{
 
     public WorkInfo joinStore(Long storeId, Long userId){
         WorkInfo work = workInfoRepository.findByUserIdAndStoreId(userId, storeId);
-        work.setActivated(true);
+        work.setActivated(1);
         return workInfoRepository.save(work);
     }
 
@@ -45,8 +47,58 @@ public class WorkInfoService{
         }
     }
 
+    public String leaveStore(Long userId, Long storeId){
+        WorkInfo work = workInfoRepository.findByUserIdAndStoreId(userId, storeId);
+
+        if(work == null) return "fail";
+        else{
+            work.setActivated(2);
+            workInfoRepository.save(work);
+            return "success";
+        }
+    }
+
+    public String leaveCheck(Long userId, Long storeId){
+        WorkInfo work = workInfoRepository.findByUserIdAndStoreIdAndActivated(userId, storeId, 2);
+
+        if(work == null) return "fail";
+        else {
+            work.setActivated(3);
+            workInfoRepository.save(work);
+            return "success";
+        }
+    }
+
+    public List<checkInDto> checkIn(Long storeId){
+        List<WorkInfo> join = workInfoRepository.findByStoreIdAndActivated(storeId, 0);
+        List<WorkInfo> leave = workInfoRepository.findByStoreIdAndActivated(storeId, 2);
+
+        List<checkInDto> waitList = new ArrayList<>();
+
+        if(!join.isEmpty()) {
+            for (WorkInfo w : join) {
+                checkInDto c = new checkInDto();
+                c.setName((userRepository.getById(w.getUserId()).getRealname()));
+                c.setActivated(0);
+                waitList.add(c);
+            }
+        }
+        if(!leave.isEmpty()){
+            for (WorkInfo w : leave) {
+                checkInDto c = new checkInDto();
+                c.setName((userRepository.getById(w.getUserId()).getRealname()));
+                c.setActivated(2);
+                waitList.add(c);
+            }
+        }
+
+        if(waitList.isEmpty()) return null;
+
+        return waitList;
+    }
+
     public List<WorkInfo> getWorker(Long storeId) {
-        List<WorkInfo> works = workInfoRepository.findByStoreIdAndActivated(storeId, true);
+        List<WorkInfo> works = workInfoRepository.findByStoreIdAndActivated(storeId, 1);
         return works;
     }
 
@@ -55,7 +107,7 @@ public class WorkInfoService{
     }
 
     public List<WorkInfo> getWorkerById(Long userId){
-        return workInfoRepository.findByUserIdAndActivated(userId, true);
+        return workInfoRepository.findByUserIdAndActivated(userId, 1);
     }
 
     public List<Schedule> getWorkSchedule(Long storeId, String day) {
