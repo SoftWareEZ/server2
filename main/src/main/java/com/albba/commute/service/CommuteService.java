@@ -1,9 +1,7 @@
 package com.albba.commute.service;
 
-import com.albba.commute.dto.EndDto;
-import com.albba.commute.dto.ListDto;
-import com.albba.commute.dto.MonthDto;
-import com.albba.commute.dto.StartDto;
+import com.albba.albbaUser.repository.UserRepository;
+import com.albba.commute.dto.*;
 import com.albba.commute.model.Commute;
 import com.albba.commute.repository.CommuteRepository;
 import com.albba.work.model.Store;
@@ -21,6 +19,7 @@ import java.util.*;
 public class CommuteService {
     private final CommuteRepository commuteRepository;
     private final WorkInfoRepository workInfoRepository;
+    private final UserRepository userRepository;
 
     private final StoreRepository storeRepository;
     public int insert(StartDto startdto){
@@ -70,37 +69,41 @@ public class CommuteService {
         return list;
     }
 
-    public class li{
-        Long userId;
-        int time = 0;
-        li(Long userId){
-            this.userId = userId;
-        }
-    }
 
-    public List<Commute> Month(Long storeId, MonthDto monthDto){
-        List<li> list = new ArrayList<>();
+    public List<MonthRequestDto>  Month(Long storeId, MonthDto monthDto){
         List<Commute> commute = commuteRepository.findCommuteByStoreIdAndYearAndMonth(storeId, monthDto.getYear(), monthDto.getMonth());
-        for (Commute item : commute) {
-            li l = new li(item.getUserId());
-            list.add(l);
-        }
+//
+        HashMap<Long,Double> tt = new HashMap<Long, Double>();
 
-        for (int i = 0; i < commute.size(); i++) {
-            for (CommuteService.li li : list) {
-                if (li.userId.equals(commute.get(i).getUserId())) {
-                    list.get(i).time += commute.get(i).getTime();
-                }
+        for(Commute x : commute)
+        {
+            if(tt.containsKey(x.getUserId()))
+            {
+                Double tmp = tt.get(x.getUserId());
+                tmp += x.getTime();
+
+                tt.replace(x.getUserId(),tmp);
+            }
+            else
+            {
+                tt.put(x.getUserId(),x.getTime());
             }
         }
-        return commute;
+        List<MonthRequestDto> List = new ArrayList<MonthRequestDto>();
+        // for(Commute x: commute)
+        for(int i =0;i<tt.size();i++)
+        {
+            Commute x = commute.get(i);
+            List.add(new MonthRequestDto(userRepository.findByUserId((x.getUserId())).getRealname(),x.getUserId(),tt.get(x.getUserId())));
+        }
+        return List;
     }
 
-    public int Cost(Long userId, MonthDto monthDto) {
+    public int Cost(Long userId, CostDto costDto) {
         int min = 0;
         try {
-            WorkInfo workInfo = workInfoRepository.findByUserIdAndStoreId(userId, monthDto.getStoreId());
-            List<Commute> commute = commuteRepository.findCommuteByUserIdAndStoreIdAndYearAndMonth(userId, monthDto.getStoreId(), monthDto.getYear(), monthDto.getMonth());
+            WorkInfo workInfo = workInfoRepository.findByUserIdAndStoreId(userId, costDto.getStoreId());
+            List<Commute> commute = commuteRepository.findCommuteByUserIdAndStoreIdAndYearAndMonth(userId, costDto.getStoreId(), costDto.getYear(), costDto.getMonth());
             for (Commute value : commute) {
                 min += value.getTime();
             }

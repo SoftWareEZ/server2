@@ -1,14 +1,12 @@
 package com.albba.commute.controller;
 
-import com.albba.commute.dto.EndDto;
-import com.albba.commute.dto.ListDto;
-import com.albba.commute.dto.MonthDto;
-import com.albba.commute.dto.StartDto;
+import com.albba.commute.dto.*;
 import com.albba.commute.model.Commute;
 import com.albba.commute.service.CommuteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -54,25 +52,18 @@ public class CommuteController {
         return commuteService.Listmonth(userId, year, month);
     }
 
-    // 월별 근무시간(store마다 다름)
-//    @PostMapping(path = "/month/{userId}")
-//    public int Month(@PathVariable Long userId, @RequestBody MonthDto monthDto) {
-//        if(commuteService.Month(userId, monthDto) == -1){
-//            return 0;
-//        } else {return commuteService.Month(userId, monthDto);}
-//    }
 
-    //월별 근무시간 수정 중 아직 미완
+    //월별 근무시간
     @PostMapping(path = "/month/{storeId}")
-    public List<Commute> Month(@PathVariable Long storeId, @RequestBody MonthDto monthDto) {
+    public List<MonthRequestDto>  Month(@PathVariable Long storeId, @RequestBody MonthDto monthDto) {
        return commuteService.Month(storeId, monthDto);
     }
 
     // 한달 월급 계산(30분 단위로 월급 계산)
     @PostMapping(path = "/cost/{userId}")
-    public int Cost(@PathVariable Long userId, @RequestBody MonthDto monthDto) {
-        if(commuteService.Cost(userId, monthDto) == -1){
+    public int Cost(@PathVariable Long userId, @RequestBody CostDto costDto) {
+        if(commuteService.Cost(userId, costDto) == -1){
             return 0;
-        } else {return commuteService.Cost(userId, monthDto);}
+        } else {return commuteService.Cost(userId, costDto);}
     }
 }
