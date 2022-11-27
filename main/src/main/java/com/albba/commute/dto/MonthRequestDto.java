@@ -9,14 +9,14 @@ import lombok.*;
 @NoArgsConstructor
 public class MonthRequestDto {
     private Long userId;
-    private String userName;
+    private String username;
     private double time;
 
     public MonthRequestDto(String userName,Long userId, double time)
     {
         this.userId = userId;
         this.time = time;
-        this.userName = userName;
+        this.username = userName;
 
 
 
