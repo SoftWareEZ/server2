@@ -1,6 +1,10 @@
 package com.albba.work.service;
 
 import com.albba.albbaUser.repository.UserRepository;
+import com.albba.commute.dto.MonthDto;
+import com.albba.commute.dto.MonthRequestDto;
+import com.albba.commute.model.Commute;
+import com.albba.commute.repository.CommuteRepository;
 import com.albba.work.dto.CodeDto;
 import com.albba.work.dto.InfoDto;
 import com.albba.work.dto.checkInDto;
@@ -14,7 +18,9 @@ import org.hibernate.jdbc.Work;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 
 @RequiredArgsConstructor
@@ -23,6 +29,7 @@ public class WorkInfoService{
     private final WorkInfoRepository workInfoRepository;
     private final StoreRepository storeRepository;
     private final UserRepository userRepository;
+    private final CommuteRepository commuteRepository;
 
     public WorkInfo joinStore(Long storeId, Long userId){
         WorkInfo work = workInfoRepository.findByUserIdAndStoreId(userId, storeId);
@@ -97,9 +104,46 @@ public class WorkInfoService{
         return waitList;
     }
 
-    public List<WorkInfo> getWorker(Long storeId) {
+    public List<MonthRequestDto> getWorker(Long storeId, MonthDto monthDto) {
         List<WorkInfo> works = workInfoRepository.findByStoreIdAndActivated(storeId, 1);
-        return works;
+
+        List<MonthRequestDto> list = new ArrayList<>();
+        for(WorkInfo work : works){
+            list.add(new MonthRequestDto(userRepository.findByUserId((work.getUserId())).getRealname(),work.getUserId(),0));
+        }
+
+        List<Commute> commute = commuteRepository.findCommuteByStoreIdAndYearAndMonth(storeId, monthDto.getYear(), monthDto.getMonth());
+
+        HashMap<Long,Double> tt = new HashMap<Long, Double>();
+
+
+
+        for(Commute x : commute)
+        {
+            if(tt.containsKey(x.getUserId()))
+            {
+                Double tmp = tt.get(x.getUserId());
+                tmp += x.getTime();
+
+                tt.replace(x.getUserId(),tmp);
+            }
+            else
+            {
+                tt.put(x.getUserId(),x.getTime());
+            }
+        }
+
+        // for(Commute x: commute)
+        for(int i =0;i<tt.size();i++)
+        {
+            Commute x = commute.get(i);
+            for(int j = 0; j < commute.size(); j++){
+                if(Objects.equals(list.get(i).getUserId(), commute.get(j).getUserId())){
+                    list.get(i).setTime(tt.get(commute.get(j).getUserId()));
+                }
+            }
+        }
+        return list;
     }
 
     public WorkInfo getWorkerByUserIdAndStoreId(Long storeId, Long userId){

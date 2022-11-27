@@ -1,5 +1,7 @@
 package com.albba.work.controller;
 
+import com.albba.commute.dto.MonthDto;
+import com.albba.commute.dto.MonthRequestDto;
 import com.albba.work.dto.InfoDto;
 import com.albba.work.dto.StoreDto;
 import com.albba.work.dto.checkInDto;
@@ -65,10 +67,10 @@ public class StoreController {
     }
 
     //입사한 알바생 조회
-    @GetMapping("/store/{storeId}/worker/list")
+    @PostMapping("/store/{storeId}/worker/list")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public List<WorkInfo> getWorker(@PathVariable Long storeId){
-        return workInfoService.getWorker(storeId);
+    public List<MonthRequestDto> getWorker(@PathVariable Long storeId, @RequestBody MonthDto monthDto){
+        return workInfoService.getWorker(storeId, monthDto);
     }
 
     //입사한 특정 알바생 조회
