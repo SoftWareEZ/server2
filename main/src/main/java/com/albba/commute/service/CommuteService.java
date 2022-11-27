@@ -53,9 +53,10 @@ public class CommuteService {
         Set<ListyearDto> list = new HashSet<>();
 
         for (Commute value : commute) {
-            list.add(new ListyearDto(Integer.parseInt(value.getMonth())));
+            if(value.getEnd() != null){
+                list.add(new ListyearDto(Integer.parseInt(value.getMonth())));
+            }
         }
-
         return list;
     }
 
@@ -63,9 +64,11 @@ public class CommuteService {
         List<Commute> commute = commuteRepository.findCommuteByUserIdAndYearAndMonth(userId, year, month);
         List<ListmonthDto> list = new ArrayList<>();
         for (Commute value : commute) {
-            String store = storeRepository.findByStoreId(value.getStoreId()).getStoreName();
+            if(value.getEnd() != null) {
+                String store = storeRepository.findByStoreId(value.getStoreId()).getStoreName();
 
-            list.add(new ListmonthDto(value.getDay() + "일 "+ store + " " + value.getStart() + "-" + value.getEnd()));
+                list.add(new ListmonthDto(value.getDay() + "일 " + store + " " + value.getStart() + "-" + value.getEnd()));
+            }
         }
 
         return list;
@@ -74,7 +77,7 @@ public class CommuteService {
 
     public List<MonthRequestDto>  Month(Long storeId, MonthDto monthDto){
         List<Commute> commute = commuteRepository.findCommuteByStoreIdAndYearAndMonth(storeId, monthDto.getYear(), monthDto.getMonth());
-//
+
         HashMap<Long,Double> tt = new HashMap<Long, Double>();
 
         for(Commute x : commute)
