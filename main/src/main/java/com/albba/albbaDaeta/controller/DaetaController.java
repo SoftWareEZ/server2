@@ -11,6 +11,7 @@ import com.albba.albbaDaeta.table.DaetaRequest;
 import com.albba.albbaUser.dto.LoginDto;
 import com.albba.albbaUser.dto.TokenDto;
 import com.albba.albbaUser.jwt.JwtFilter;
+import com.albba.albbaUser.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,11 +30,13 @@ import java.util.List;
 public class DaetaController {
     private final DaetaService daetaService;
     private final DaetaRequestRepository requestRepository;
+    private final UserRepository userRepository;
 
     @PostMapping("/daeta/request")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public void DaetaRequest(@RequestBody DaetaRequestDto requestDto) {
-        DaetaRequest request = new DaetaRequest(requestDto.getDate(),requestDto.getStoreId(), requestDto.getRequestId());
+
+        DaetaRequest request = new DaetaRequest(requestDto.getDate(),requestDto.getStoreId(), requestDto.getRequestId(),userRepository.findByUserId(requestDto.getRequestId()).getRealname());
         daetaService.requestSave(request);
 
     }

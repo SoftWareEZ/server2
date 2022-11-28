@@ -25,12 +25,15 @@ public class DaetaRequest {
     @Column(name ="requestId")
     private Long requestId;
 
+    @Column(name = "requestName")
+    private String requestName;
 
-    public DaetaRequest(Long date, Long storeId,Long requestId)
+    public DaetaRequest(Long date, Long storeId,Long requestId,String requestName)
     {
         this.date = date;
         this.storeId=storeId;
         this.requestId=requestId;
+        this.requestName = requestName;
     }
 
 }
