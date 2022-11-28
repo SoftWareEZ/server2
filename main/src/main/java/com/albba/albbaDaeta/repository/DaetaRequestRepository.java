@@ -8,4 +8,5 @@ import java.util.List;
 public interface DaetaRequestRepository extends JpaRepository<DaetaRequest,Long> {
     List<DaetaRequest> findDaetaRequestByStoreId(Long storeId);
     DaetaRequest findByNo(Long no);
+    DaetaRequest findDaetaRequestByRequestIdAndDateAndStoreId(Long id,Long date,Long storeId);
 }

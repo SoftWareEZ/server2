@@ -1,6 +1,7 @@
 package com.albba.albbaDaeta.controller;
 
 import com.albba.albbaDaeta.dto.DaetaAcceptDto;
+import com.albba.albbaDaeta.dto.DaetaRequestChkDto;
 import com.albba.albbaDaeta.dto.DaetaRequestDto;
 import com.albba.albbaDaeta.dto.DaetaViewDto;
 import com.albba.albbaDaeta.repository.DaetaRepository;
@@ -36,9 +37,18 @@ public class DaetaController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public void DaetaRequest(@RequestBody DaetaRequestDto requestDto) {
 
-        DaetaRequest request = new DaetaRequest(requestDto.getDate(),requestDto.getStoreId(), requestDto.getRequestId(),userRepository.findByUserId(requestDto.getRequestId()).getRealname());
+        DaetaRequest request = new DaetaRequest(requestDto.getDate(),requestDto.getStoreId(), requestDto.getRequestId(),
+                userRepository.findByUserId(requestDto.getRequestId()).getRealname());
         daetaService.requestSave(request);
 
+    }
+
+    @PostMapping("/daeta/request/check")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public DaetaRequest Requestchk(@RequestBody DaetaRequestChkDto chkDto)
+
+    {
+        return requestRepository.findDaetaRequestByRequestIdAndDateAndStoreId(chkDto.getUserId(),chkDto.getDate(), chkDto.getStoreId());
     }
 
     @PostMapping("/daeta/accept/view")
