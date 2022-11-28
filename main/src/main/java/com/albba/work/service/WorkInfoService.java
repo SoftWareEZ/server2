@@ -129,9 +129,13 @@ public class WorkInfoService{
 
     public List<MonthRequestDto> getWorker(Long storeId, MonthDto monthDto) {
         List<WorkInfo> works = workInfoRepository.findByStoreIdAndActivated(storeId, 1);
-
+        List<WorkInfo> works2 = workInfoRepository.findByStoreIdAndActivated(storeId, 2);
         List<MonthRequestDto> list = new ArrayList<>();
         for(WorkInfo work : works){
+            list.add(new MonthRequestDto(userRepository.findByUserId((work.getUserId())).getRealname(),work.getUserId(),0));
+        }
+
+        for(WorkInfo work : works2){
             list.add(new MonthRequestDto(userRepository.findByUserId((work.getUserId())).getRealname(),work.getUserId(),0));
         }
 
