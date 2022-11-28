@@ -24,8 +24,8 @@ public class StoreService {
     }
 
     //모든 사업장 조회
-    public List<Store> getStore() throws SQLException {
-        List<Store> stores = storeRepository.findAll();
+    public List<Store> getStore(Long userId){
+        List<Store> stores = storeRepository.findAllByUserId(userId);
         return stores;
     }
 
