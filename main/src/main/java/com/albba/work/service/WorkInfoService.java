@@ -106,6 +106,7 @@ public class WorkInfoService{
         if(!join.isEmpty()) {
             for (WorkInfo w : join) {
                 checkInDto c = new checkInDto();
+                c.setUserId(w.getUserId());
                 c.setName((userRepository.getById(w.getUserId()).getRealname()));
                 c.setActivated(0);
                 waitList.add(c);
@@ -114,6 +115,7 @@ public class WorkInfoService{
         if(!leave.isEmpty()){
             for (WorkInfo w : leave) {
                 checkInDto c = new checkInDto();
+                c.setUserId(w.getUserId());
                 c.setName((userRepository.getById(w.getUserId()).getRealname()));
                 c.setActivated(2);
                 waitList.add(c);

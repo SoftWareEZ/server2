@@ -33,10 +33,10 @@ public class StoreController {
     }
 
     //사업장 조회
-    @GetMapping("/store/list")
+    @GetMapping("/store/list/{userId}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public List<Store> getStore()throws SQLException {
-        return storeService.getStore();
+    public List<Store> getStore(@PathVariable Long userId) {
+        return storeService.getStore(userId);
     }
 
     //사업장 초대코드 조회
