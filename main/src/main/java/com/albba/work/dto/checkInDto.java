@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class checkInDto {
+    private Long userId;
     private String name;
     private int activated;
 }
