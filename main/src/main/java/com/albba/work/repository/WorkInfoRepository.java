@@ -11,13 +11,13 @@ public interface WorkInfoRepository extends JpaRepository<WorkInfo, Long> {
     List<WorkInfo> findByUserIdAndActivated(Long userId, int activated);
     List<WorkInfo> findByStoreIdAndActivated(Long storeId, int activated);
 
-    List<WorkInfo> findByStoreIdAndMonStartNot(Long storeId, String check);
-    List<WorkInfo> findByStoreIdAndTueStartIsNot(Long storeId, String check);
-    List<WorkInfo> findByStoreIdAndWedStartIsNot(Long storeId, String check);
-    List<WorkInfo> findByStoreIdAndThuStartIsNot(Long storeId, String check);
-    List<WorkInfo> findByStoreIdAndFriStartIsNot(Long storeId, String check);
-    List<WorkInfo> findByStoreIdAndSatStartIsNot(Long storeId, String check);
-    List<WorkInfo> findByStoreIdAndSunStartIsNot(Long storeId, String check);
+    List<WorkInfo> findByStoreIdAndMonStartNotAndActivatedNot(Long storeId, String check, int activated);
+    List<WorkInfo> findByStoreIdAndTueStartIsNotAndActivatedNot(Long storeId, String check, int activated);
+    List<WorkInfo> findByStoreIdAndWedStartIsNotAndActivatedNot(Long storeId, String check, int activated);
+    List<WorkInfo> findByStoreIdAndThuStartIsNotAndActivatedNot(Long storeId, String check, int activated);
+    List<WorkInfo> findByStoreIdAndFriStartIsNotAndActivatedNot(Long storeId, String check, int activated);
+    List<WorkInfo> findByStoreIdAndSatStartIsNotAndActivatedNot(Long storeId, String check, int activated);
+    List<WorkInfo> findByStoreIdAndSunStartIsNotAndActivatedNot(Long storeId, String check, int activated);
 
     List<WorkInfo> findWorkInfosByUserId(Long userId);
 
