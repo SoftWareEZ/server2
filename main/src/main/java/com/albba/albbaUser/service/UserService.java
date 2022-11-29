@@ -2,16 +2,26 @@ package com.albba.albbaUser.service;
 
 import com.albba.albbaUser.dto.KakaoLoginRequestDto;
 import com.albba.albbaUser.dto.SignupRequestDto;
+import com.albba.albbaUser.dto.TokenDto;
 import com.albba.albbaUser.dto.UserInfoFrontDto;
 import com.albba.albbaUser.entity.Authority;
 import com.albba.albbaUser.entity.User;
+import com.albba.albbaUser.jwt.JwtFilter;
+import com.albba.albbaUser.jwt.TokenProvider;
 import com.albba.albbaUser.repository.UserRepository;
+import com.albba.kakaoLogin.security.UserDetailsImpl;
 import com.albba.work.model.Store;
 import com.albba.work.repository.StoreRepository;
+import lombok.RequiredArgsConstructor;
 import org.apache.catalina.security.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,33 +32,34 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-
+@RequiredArgsConstructor
 public class UserService {
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final UserRepository userRepository;
     private final StoreRepository storeRepository;
     private static final Logger logger = LoggerFactory.getLogger(SecurityUtil.class);
+    private final TokenProvider tokenProvider;
 
-
-    @Autowired
+   /* @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, StoreRepository storeRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.storeRepository = storeRepository;
-    }
+    }*/
 
     //
-    public User KakaoLogin(KakaoLoginRequestDto requestDto){
+    public ResponseEntity<TokenDto> KakaoLogin(KakaoLoginRequestDto requestDto){
         String username = requestDto.getUsername();
         Optional<User> found = userRepository.findByUsername(username);
-
+        String password = null;
 
 
         if (!found.isPresent()) {
-            String password = UUID.randomUUID().toString();
+             password = requestDto.getUsername();
             String encodedPassword = passwordEncoder.encode(password);
             String email = requestDto.getEmail();
-
+           System.out.println(password);
             String phone_number = null;
 
 
@@ -66,13 +77,59 @@ public class UserService {
             //user.setAuthorities(Collections.singleton(authority));
             user.setAuthorities(authoritySet);
             userRepository.save(user);
-            return user;
+
+
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(requestDto.getUsername(), password);
+
+            //토큰으로 Authentication 객체 만듦
+
+
+            // authentication메소드가 실행될때
+            Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);//여기서 LoginUserDetails에 있는 loadUserByUsername 실행
+            //그 결과로 AUthentication 만들어서 Security context에 넣어줌
+            //이건 인증된 결과, 요청 둘다 되는 메소드
+
+            //여기서 이게 필요한가??
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            //jwt 토큰 만들기
+            String jwt = tokenProvider.createToken(authentication);
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+
+            return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+
+
+
+
+
         }
 
+        User kakaoUser = found.get();
+
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(kakaoUser.getUsername(), kakaoUser.getUsername());
+
+        //토큰으로 Authentication 객체 만듦
 
 
+        // authentication메소드가 실행될때
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);//여기서 LoginUserDetails에 있는 loadUserByUsername 실행
+        //그 결과로 AUthentication 만들어서 Security context에 넣어줌
+        //이건 인증된 결과, 요청 둘다 되는 메소드
 
-        return found.get();
+        //여기서 이게 필요한가??
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        //jwt 토큰 만들기
+        String jwt = tokenProvider.createToken(authentication);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+
+        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
 
     }
 

@@ -43,6 +43,7 @@ public class JwtFilter extends GenericFilterBean {
             //이건 인증된 결과, 요청 둘다 되는 메소드
             //여기서 context에 저장
             SecurityContextHolder.getContext().setAuthentication(authentication);
+           //System.out.println("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}"+ authentication.getName()+ requestURI);
             logger.debug("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
         }
         else {

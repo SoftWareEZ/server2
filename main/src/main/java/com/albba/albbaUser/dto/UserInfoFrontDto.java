@@ -31,7 +31,7 @@ public class UserInfoFrontDto {
     {
         this.userId = user.getUserId();
         this.username = user.getUsername();
-        this.email = user.getUsername();
+        this.email = user.getEmail();
         this.realname = user.getRealname();
         this.phone_number = user.getPhone_number();
         this.storeId = sid;

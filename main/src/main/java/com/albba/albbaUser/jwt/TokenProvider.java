@@ -89,6 +89,7 @@ public class TokenProvider implements InitializingBean {
         } catch (IllegalArgumentException e) {
             logger.info("JWT 오류");
         }
+        System.out.println("token 이상함");
         return false;
     }
 }
