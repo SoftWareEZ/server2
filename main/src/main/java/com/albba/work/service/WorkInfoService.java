@@ -275,7 +275,7 @@ public class WorkInfoService{
     }
 
     public WorkInfo updateWorker(Long storeId, Long userId, InfoDto infoDto){
-        WorkInfo work = workInfoRepository.findByUserIdAndStoreId(userId, storeId);
+        WorkInfo work = workInfoRepository.findByUserIdAndStoreIdAndActivated(userId, storeId, 1);
         work.setWage(infoDto.getWage());
         work.setAccount(infoDto.getAccount());
 
