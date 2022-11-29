@@ -134,10 +134,10 @@ public class LoginController {
         return userService.getRealname();
     }
 
-    @GetMapping("/userinfo")
-    public UserInfoFrontDto getUser()
+    @GetMapping("/userinfo/{isAdmin}")
+    public UserInfoFrontDto getUser(@PathVariable Long isAdmin)
     {
-        return userService.getUserInfo();
+        return userService.getUserInfo(isAdmin);
     }
 
     //주석달랭

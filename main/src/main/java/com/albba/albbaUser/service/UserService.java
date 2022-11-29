@@ -11,7 +11,9 @@ import com.albba.albbaUser.jwt.TokenProvider;
 import com.albba.albbaUser.repository.UserRepository;
 import com.albba.kakaoLogin.security.UserDetailsImpl;
 import com.albba.work.model.Store;
+import com.albba.work.model.WorkInfo;
 import com.albba.work.repository.StoreRepository;
+import com.albba.work.repository.WorkInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.security.SecurityUtil;
 import org.slf4j.Logger;
@@ -40,6 +42,7 @@ public class UserService {
     private final StoreRepository storeRepository;
     private static final Logger logger = LoggerFactory.getLogger(SecurityUtil.class);
     private final TokenProvider tokenProvider;
+    private final WorkInfoRepository workInfoRepository;
 
    /* @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, StoreRepository storeRepository) {
@@ -142,7 +145,7 @@ public class UserService {
     }
     //인증 정보 바탕으로 ID 가져오는 서비스
 
-    public UserInfoFrontDto getUserInfo()
+    public UserInfoFrontDto getUserInfo(Long isAdmin)
     {
 
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -174,15 +177,26 @@ public class UserService {
             //한 사용자가 사업장 여러 개 할거면 여기서 List<Store> 로 가져오기
             Long storeid = (long)1;
             //<Store> storechk = storeRepository.findByUserId(usertemp.getUserId());
-            List<Store> storeschk = storeRepository.findStoresByUserId(usertemp.getUserId());
 
+            if(isAdmin ==1) {
+                List<Store> storeschk = storeRepository.findStoresByUserId(usertemp.getUserId());
+                if (storeschk.size() == 0) {
+                    storeid = null;
+                } else {
+                    storeid = storeschk.get(0).getStoreId();
+                }
 
-            if(storeschk.size()==0) {
-                storeid = null;
             }
             else {
-                storeid = storeschk.get(0).getStoreId();
+                List<WorkInfo> StoreChk = workInfoRepository.findWorkInfosByUserId(usertemp.getUserId());
+                if(StoreChk.size()==0)
+                    storeid = null;
+                else
+                    storeid = StoreChk.get(0).getStoreId();
+
+
             }
+
              /*   if(storechk.isPresent())
                 storeid= storechk.get().getStoreId();
             else

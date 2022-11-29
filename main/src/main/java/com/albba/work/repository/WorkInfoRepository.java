@@ -19,4 +19,6 @@ public interface WorkInfoRepository extends JpaRepository<WorkInfo, Long> {
     List<WorkInfo> findByStoreIdAndSatStartIsNot(Long storeId, String check);
     List<WorkInfo> findByStoreIdAndSunStartIsNot(Long storeId, String check);
 
+    List<WorkInfo> findWorkInfosByUserId(Long userId);
+
 }
