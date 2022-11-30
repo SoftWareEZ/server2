@@ -186,7 +186,7 @@ public class WorkInfoService{
         List<Schedule> schedule = new ArrayList<>();
         switch (day) {
             case "mon":
-                work = workInfoRepository.findByStoreIdAndMonStartNot(storeId, "null");
+                work = workInfoRepository.findByStoreIdAndMonStartNotAndActivatedNot(storeId, "null", 3);
                 if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
@@ -198,7 +198,7 @@ public class WorkInfoService{
                 }
                 return schedule;
             case "tue":
-                work = workInfoRepository.findByStoreIdAndTueStartIsNot(storeId, "null");
+                work = workInfoRepository.findByStoreIdAndTueStartIsNotAndActivatedNot(storeId, "null", 3);
                 if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
@@ -210,7 +210,7 @@ public class WorkInfoService{
                 }
                 return schedule;
             case "wed":
-                work = workInfoRepository.findByStoreIdAndWedStartIsNot(storeId, "null");
+                work = workInfoRepository.findByStoreIdAndWedStartIsNotAndActivatedNot(storeId, "null", 3);
                 if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
@@ -222,7 +222,7 @@ public class WorkInfoService{
                 }
                 return schedule;
             case "thu":
-                work = workInfoRepository.findByStoreIdAndThuStartIsNot(storeId, "null");
+                work = workInfoRepository.findByStoreIdAndThuStartIsNotAndActivatedNot(storeId, "null", 3);
                 if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
@@ -234,7 +234,7 @@ public class WorkInfoService{
                 }
                 return schedule;
             case "fri":
-                work = workInfoRepository.findByStoreIdAndFriStartIsNot(storeId, "null");
+                work = workInfoRepository.findByStoreIdAndFriStartIsNotAndActivatedNot(storeId, "null", 3);
                 if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
@@ -246,7 +246,7 @@ public class WorkInfoService{
                 }
                 return schedule;
             case "sat":
-                work = workInfoRepository.findByStoreIdAndSatStartIsNot(storeId, "null");
+                work = workInfoRepository.findByStoreIdAndSatStartIsNotAndActivatedNot(storeId, "null", 3);
                 if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
@@ -258,7 +258,7 @@ public class WorkInfoService{
                 }
                 return schedule;
             case "sun":
-                work = workInfoRepository.findByStoreIdAndSunStartIsNot(storeId, "null");
+                work = workInfoRepository.findByStoreIdAndSunStartIsNotAndActivatedNot(storeId, "null", 3);
                 if (work.isEmpty()) return null;
                 for (WorkInfo workInfo : work) {
                     Schedule s = new Schedule();
@@ -275,24 +275,24 @@ public class WorkInfoService{
     }
 
     public WorkInfo updateWorker(Long storeId, Long userId, InfoDto infoDto){
-        WorkInfo work = workInfoRepository.findByUserIdAndStoreId(userId, storeId);
+        WorkInfo work = workInfoRepository.findByUserIdAndStoreIdAndActivated(userId, storeId, 1);
         work.setWage(infoDto.getWage());
         work.setAccount(infoDto.getAccount());
 
-        work.setMonStart(infoDto.getMon_start());
-        work.setMonEnd(infoDto.getMon_end());
-        work.setTueStart(infoDto.getTue_start());
-        work.setTueEnd(infoDto.getTue_end());
-        work.setWedStart(infoDto.getWed_start());
-        work.setWedEnd(infoDto.getWed_end());
-        work.setThuStart(infoDto.getThu_start());
-        work.setThuEnd(infoDto.getThu_end());
-        work.setFriStart(infoDto.getFri_start());
-        work.setFriEnd(infoDto.getFri_end());
-        work.setSatStart(infoDto.getSat_start());
-        work.setSatEnd(infoDto.getSat_end());
-        work.setSunStart(infoDto.getSun_start());
-        work.setSunEnd(infoDto.getSun_end());
+        work.setMonStart(infoDto.getMonStart());
+        work.setMonEnd(infoDto.getMonEnd());
+        work.setTueStart(infoDto.getTueStart());
+        work.setTueEnd(infoDto.getTueEnd());
+        work.setWedStart(infoDto.getWedStart());
+        work.setWedEnd(infoDto.getWedEnd());
+        work.setThuStart(infoDto.getThuStart());
+        work.setThuEnd(infoDto.getThuEnd());
+        work.setFriStart(infoDto.getFriStart());
+        work.setFriEnd(infoDto.getFriEnd());
+        work.setSatStart(infoDto.getSatStart());
+        work.setSatEnd(infoDto.getSatEnd());
+        work.setSunStart(infoDto.getSunStart());
+        work.setSunEnd(infoDto.getSunEnd());
         return workInfoRepository.save(work);
     }
 }

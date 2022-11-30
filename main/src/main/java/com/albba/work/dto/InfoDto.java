@@ -11,11 +11,11 @@ public class InfoDto {
     private int wage;
     private String account;
 
-    private String mon_start, mon_end;
-    private String tue_start, tue_end;
-    private String wed_start, wed_end;
-    private String thu_start, thu_end;
-    private String fri_start, fri_end;
-    private String sat_start, sat_end;
-    private String sun_start, sun_end;
+    private String monStart, monEnd;
+    private String tueStart, tueEnd;
+    private String wedStart, wedEnd;
+    private String thuStart, thuEnd;
+    private String friStart, friEnd;
+    private String satStart, satEnd;
+    private String sunStart, sunEnd;
 }
