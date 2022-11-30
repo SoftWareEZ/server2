@@ -9,7 +9,7 @@ insert into user (username, password, email,realname,phone_number) values ('minw
 insert into user (username, password, email,realname,phone_number) values ('hang', '$2a$10$sg2gYiGFTPvqoebJkC/f4erLz.Q8x3ljfAr0P.jeRzhW3uyov56iu', 'mrzo@yu.ac.kr','조행래','010-0000-0000');
 insert into user (username, password, email,realname,phone_number) values ('park', '$2a$10$sg2gYiGFTPvqoebJkC/f4erLz.Q8x3ljfAr0P.jeRzhW3uyov56iu', 'duck99@gmail.com','박영덕','010-0000-0000');
 insert into user (username, password, email,realname,phone_number) values ('jong', '$2a$10$sg2gYiGFTPvqoebJkC/f4erLz.Q8x3ljfAr0P.jeRzhW3uyov56iu', 'jonghee@daum.net','윤종희','010-0000-0000');
-insert into user (username, password, email,realname,phone_number) values ('kkwack', '$2a$10$sg2gYiGFTPvqoebJkC/f4erLz.Q8x3ljfAr0P.jeRzhW3uyov56iu', 'kkwack@hanmail.net','꽉종욱','010-0000-0000');
+insert into user (username, password, email,realname,phone_number) values ('kkwack', '$2a$10$sg2gYiGFTPvqoebJkC/f4erLz.Q8x3ljfAr0P.jeRzhW3uyov56iu', 'kkwack@hanmail.net','곽종욱','010-0000-0000');
 
 
 
@@ -58,10 +58,10 @@ insert into work_info(user_id, store_id, wage, account, activated, mon_start, mo
 
 insert into commute (user_id, store_id, year, month, day, start, end, time) values ('1', '1', '2022','10','1', '13:00', '14:00', 60);
 insert into commute (user_id, store_id, year, month, day, start, end, time) values ('1', '1', '2022','11','11', '13:00', '14:00', 60);
-insert into commute (user_id, store_id, year, month, day, start, end, time) values ('1', '1', '2022', '12', '11', '11:00', '12:00', 60);
-insert into commute (user_id, store_id, year, month, day, start, end, time) values ('1', '1', '2022', '12', '12', '11:00', '12:00', 60);
-insert into commute (user_id, store_id, year, month, day, start, end, time) values ('1', '2', '2022', '12', '13', '11:00', '12:00', 60);
-insert into commute (user_id, store_id, year, month, day, start, end, time) values ('4', '2', '2022','12','11', '13:00', '14:00', 60);
-insert into commute (user_id, store_id, year, month, day, start, end, time) values ('5', '1', '2022','12','11', '13:00', '14:00', 60);
-insert into commute (user_id, store_id, year, month, day, start, end, time) values ('5', '1', '2022','12','12', '13:00', '14:00', 60);
-insert into commute (user_id, store_id, year, month, day, start, end, time) values ('6', '1', '2022','12','11', '13:00', '14:00', 60);
+insert into commute (user_id, store_id, year, month, day, start, end, time) values ('1', '1', '2022', '11', '12', '11:00', '12:00', 60);
+insert into commute (user_id, store_id, year, month, day, start, end, time) values ('1', '1', '2022', '11', '12', '13:00', '15:00', 120);
+insert into commute (user_id, store_id, year, month, day, start, end, time) values ('1', '2', '2022', '11', '13', '11:00', '12:00', 60);
+insert into commute (user_id, store_id, year, month, day, start, end, time) values ('4', '2', '2022','11','14', '13:00', '14:00', 60);
+insert into commute (user_id, store_id, year, month, day, start, end, time) values ('5', '1', '2022','11','15', '13:00', '14:00', 60);
+insert into commute (user_id, store_id, year, month, day, start, end, time) values ('5', '1', '2022','11','16', '13:00', '14:00', 60);
+insert into commute (user_id, store_id, year, month, day, start, end, time) values ('6', '1', '2022','11','17', '13:00', '14:00', 60);
