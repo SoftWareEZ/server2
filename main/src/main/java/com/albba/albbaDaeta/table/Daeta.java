@@ -28,6 +28,9 @@ public class Daeta {
     @Column(name="acceptName")
     private String acceptName;
 
+    @Column(name ="approved")
+    private Long approved;
+
     public Daeta(DaetaRequest requestDto, String realname)
 
     {
@@ -35,6 +38,7 @@ public class Daeta {
         this.requestId=requestDto.getRequestId();
         this.storeId = requestDto.getStoreId();
         this.acceptName = realname;
+        this.approved = (long)0;
 
     }
 

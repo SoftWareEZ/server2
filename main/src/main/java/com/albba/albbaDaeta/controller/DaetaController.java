@@ -32,6 +32,7 @@ public class DaetaController {
     private final DaetaService daetaService;
     private final DaetaRequestRepository requestRepository;
     private final UserRepository userRepository;
+    private final DaetaRepository daetaRepository;
 
     @PostMapping("/daeta/request")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
@@ -79,7 +80,23 @@ public class DaetaController {
         return requestRepository.findDaetaRequestByStoreId(storeId);
 
     }
+    @GetMapping("/daeta/request/view/admin/{storeId}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public List<Daeta> requestAdminList(@PathVariable Long storeId)
+    {
+        return daetaRepository.findDaetasByStoreIdAndApproved(storeId,(long)0);
 
+    }
+
+    @GetMapping("/daeta/approved/{no}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public void DaetaApprove(@PathVariable Long no)
+    {
+        Daeta daeta = daetaRepository.findById(no)
+                .orElseThrow(() -> new NullPointerException("해당 no가 존재하지 않습니다."));
+        daeta.setApproved((long)1);
+        daetaRepository.save(daeta);
+    }
 
 
 }

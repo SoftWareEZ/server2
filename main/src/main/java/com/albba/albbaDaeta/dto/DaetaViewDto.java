@@ -12,4 +12,6 @@ import lombok.Setter;
 public class DaetaViewDto {
     private Long date;
     private Long storeId;
+
+    private Long approved;
 }

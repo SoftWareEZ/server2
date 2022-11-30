@@ -33,9 +33,11 @@ public class DaetaService {
         //System.out.println(realname);
         daetaRepository.save(new Daeta(request,realname));
     }
+
+    //이건 한달 근무표에서 쓸거
     public List<Daeta> daetaView(Long date,Long storeId)
     {
-        return daetaRepository.findDaetasByDateAndStoreId(date,storeId);
+        return daetaRepository.findDaetasByDateAndStoreIdAndApproved(date,storeId,(long)1);
     }
 
 
