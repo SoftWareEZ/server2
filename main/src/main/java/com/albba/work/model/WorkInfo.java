@@ -1,6 +1,5 @@
 package com.albba.work.model;
 
-import com.albba.work.dto.WorkInfoDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,26 +29,42 @@ public class WorkInfo{
     @Column
     private int activated;
 
-    @Column
-    private String monStart, monEnd;
+    @Column(name = "mon_start")
+    private String monStart;
 
-    @Column
-    private String tueStart, tueEnd;
+    @Column(name = "mon_end")
+    private String monEnd;
 
-    @Column
-    private String wedStart, wedEnd;
+    @Column(name = "tue_start")
+    private String tueStart;
+    @Column(name = "tue_end")
+    private String tueEnd;
 
-    @Column
-    private String thuStart, thuEnd;
+    @Column(name = "wed_start")
+    private String wedStart;
+    @Column(name = "wed_end")
+    private String wedEnd;
 
-    @Column
-    private String friStart, friEnd;
+    @Column(name = "thu_start")
+    private String thuStart;
+    @Column(name = "thu_end")
+    private String thuEnd;
 
-    @Column
-    private String satStart, satEnd;
+    @Column(name = "fri_start")
+    private String friStart;
 
-    @Column
-    private String sunStart, sunEnd;
+    @Column(name = "fri_end")
+    private String friEnd;
+
+    @Column(name = "sat_start")
+    private String satStart;
+    @Column(name = "sat_end")
+    private String satEnd;
+
+    @Column(name = "sun_start")
+    private String sunStart;
+    @Column(name = "sun_end")
+    private String sunEnd;
 
     public WorkInfo(Long userId, Long storeId, int wage, String account){
         this.userId = userId;

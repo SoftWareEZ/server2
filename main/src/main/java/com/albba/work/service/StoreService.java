@@ -6,7 +6,6 @@ import com.albba.work.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @RequiredArgsConstructor
