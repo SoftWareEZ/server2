@@ -191,10 +191,17 @@ public class UserService {
                 List<WorkInfo> StoreChk = workInfoRepository.findWorkInfosByUserId(usertemp.getUserId());
                 if(StoreChk.size()==0)
                     storeid = null;
-                else
-                    storeid = StoreChk.get(0).getStoreId();
-
-
+                else {
+                    for(WorkInfo w : StoreChk){
+                        if((w.getActivated() == 0) || (w.getActivated() == 3)){
+                            storeid = null;
+                        }
+                        else {
+                            storeid = StoreChk.get(0).getStoreId();
+                        }
+                        break;
+                    }
+                }
             }
 
              /*   if(storechk.isPresent())
