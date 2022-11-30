@@ -65,3 +65,5 @@ insert into commute (user_id, store_id, year, month, day, start, end, time) valu
 insert into commute (user_id, store_id, year, month, day, start, end, time) values ('5', '1', '2022','11','15', '13:00', '14:00', 60);
 insert into commute (user_id, store_id, year, month, day, start, end, time) values ('5', '1', '2022','11','16', '13:00', '14:00', 60);
 insert into commute (user_id, store_id, year, month, day, start, end, time) values ('6', '1', '2022','11','17', '13:00', '14:00', 60);
+insert into commute (user_id, store_id, year, month, day, start, end, time) values ('5', '1', '2022','11','28', '13:00', '14:00', 60);
+insert into commute (user_id, store_id, year, month, day, start, end, time) values ('6', '1', '2022','11','29', '13:00', '14:00', 60);
