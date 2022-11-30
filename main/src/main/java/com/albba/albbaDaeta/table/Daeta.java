@@ -31,15 +31,18 @@ public class Daeta {
     @Column(name ="approved")
     private Long approved;
 
+    @Column(name = "requestName")
+    private String requestName;
+
     public Daeta(DaetaRequest requestDto, String realname)
 
     {
         this.date = requestDto.getDate();
         this.requestId=requestDto.getRequestId();
+        this.requestName=requestDto.getRequestName();
         this.storeId = requestDto.getStoreId();
         this.acceptName = realname;
         this.approved = (long)0;
 
     }
-
 }

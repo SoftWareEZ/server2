@@ -31,7 +31,7 @@ public class DaetaService {
         //System.out.println(request.getDate());
         String realname =userRepository.findByUserId(acceptDto.getAcceptId()).getRealname();
         //System.out.println(realname);
-        daetaRepository.save(new Daeta(request,realname));
+        daetaRepository.save(new Daeta(request, realname));
     }
 
     //이건 한달 근무표에서 쓸거
