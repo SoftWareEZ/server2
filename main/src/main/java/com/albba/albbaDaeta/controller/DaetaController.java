@@ -38,18 +38,15 @@ public class DaetaController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public void DaetaRequest(@RequestBody DaetaRequestDto requestDto) {
 
-        DaetaRequest request = new DaetaRequest(requestDto.getDate(),requestDto.getStoreId(), requestDto.getRequestId(),
-                userRepository.findByUserId(requestDto.getRequestId()).getRealname());
-        daetaService.requestSave(request);
 
+        daetaService.DaetaRequest(requestDto);
     }
 
     @PostMapping("/daeta/request/check")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public DaetaRequest Requestchk(@RequestBody DaetaRequestChkDto chkDto)
-
     {
-        return requestRepository.findDaetaRequestByRequestIdAndDateAndStoreId(chkDto.getUserId(),chkDto.getDate(), chkDto.getStoreId());
+        return daetaService.RequestCheck(chkDto);
     }
 
     @PostMapping("/daeta/accept/view")
@@ -69,7 +66,7 @@ public class DaetaController {
         //System.out.println(acceptDto.getAcceptId()+" "+acceptDto.getNo());
         daetaService.accept(acceptDto);
 
-        requestRepository.deleteById(acceptDto.getNo());
+
 
     }
 
@@ -77,14 +74,14 @@ public class DaetaController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public List<DaetaRequest> requestList(@PathVariable Long storeId)
     {
-        return requestRepository.findDaetaRequestByStoreId(storeId);
+        return daetaService.requestList(storeId);
 
     }
     @GetMapping("/daeta/request/view/admin/{storeId}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public List<Daeta> requestAdminList(@PathVariable Long storeId)
     {
-        return daetaRepository.findDaetasByStoreIdAndApproved(storeId,(long)0);
+        return daetaService.requestAdminList(storeId);
 
     }
 
@@ -92,10 +89,7 @@ public class DaetaController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public void DaetaApprove(@PathVariable Long no)
     {
-        Daeta daeta = daetaRepository.findById(no)
-                .orElseThrow(() -> new NullPointerException("해당 no가 존재하지 않습니다."));
-        daeta.setApproved((long)1);
-        daetaRepository.save(daeta);
+        daetaService.DaetaApprove(no);
     }
 
 
