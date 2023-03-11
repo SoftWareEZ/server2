@@ -42,7 +42,7 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody LoginDto loginDto) {
 
-
+/*
         //@RequestBody로 객체 받아와서 바탕으로 UsernamePasswordAuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
@@ -64,7 +64,8 @@ public class LoginController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
-        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);*/
+        return userService.Login(loginDto);
     }
     @PostMapping("/kakao/login")
     public ResponseEntity<TokenDto> kakaoLogin(@RequestBody KakaoLoginRequestDto requestDto) {

@@ -1,9 +1,6 @@
 package com.albba.albbaUser.service;
 
-import com.albba.albbaUser.dto.KakaoLoginRequestDto;
-import com.albba.albbaUser.dto.SignupRequestDto;
-import com.albba.albbaUser.dto.TokenDto;
-import com.albba.albbaUser.dto.UserInfoFrontDto;
+import com.albba.albbaUser.dto.*;
 import com.albba.albbaUser.entity.Authority;
 import com.albba.albbaUser.entity.User;
 import com.albba.albbaUser.jwt.JwtFilter;
@@ -52,6 +49,31 @@ public class UserService {
     }*/
 
     //
+    public ResponseEntity<TokenDto> Login(LoginDto loginDto)
+    {
+        //@RequestBody로 객체 받아와서 바탕으로 UsernamePasswordAuthenticationToken 생성
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
+
+        //토큰으로 Authentication 객체 만듦
+
+
+        // authentication메소드가 실행될때
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);//여기서 LoginUserDetails에 있는 loadUserByUsername 실행
+        //그 결과로 AUthentication 만들어서 Security context에 넣어줌
+        //이건 인증된 결과, 요청 둘다 되는 메소드
+
+        //여기서 이게 필요한가??
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        //jwt 토큰 만들기
+        String jwt = tokenProvider.createToken(authentication);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+
+        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+    }
     public ResponseEntity<TokenDto> KakaoLogin(KakaoLoginRequestDto requestDto){
         String username = requestDto.getUsername();
         Optional<User> found = userRepository.findByUsername(username);
